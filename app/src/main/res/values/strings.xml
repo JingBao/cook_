@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">cook</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- DrawerLayout-->
+    <string name="drawer_head_text1">登录</string>
+    <string name="drawer_head_text２">登录来收藏和订阅你感兴趣的内容</string>
+
+    <string name="drawer_menu_title1">首页</string>
+    <string name="drawer_menu_title2">查看所有厨娘</string>
+    <string name="drawer_menu_title3">查看所有美食</string>
+    <string name="drawer_menu_title4">我的收藏</string>
+    <string name="drawer_menu_title5">我订阅的厨娘</string>
+    <string name="drawer_menu_title6">关于厨娘</string>
+    <string name="drawer_menu_title7">清除缓存</string>
+    <string name="drawer_menu_title8">退出登录</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="recomment_fragment">高级厨娘</string>
+</resources>

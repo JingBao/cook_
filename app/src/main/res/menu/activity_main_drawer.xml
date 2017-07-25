@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/group_1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/drawer_menu_title1" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/drawer_menu_title2" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/drawer_menu_title3" />
+    </group>
+
+    <group
+        android:id="@+id/group_2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_collection"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/drawer_menu_title4" />
+        <item
+            android:id="@+id/nav_subscribe"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/drawer_menu_title5" />
+    </group>
+
+    <group
+        android:id="@+id/group_3"
+        android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="分享" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/drawer_menu_title6" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/drawer_menu_title7" />
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/drawer_menu_title8" />
+    </group>
+
+</menu>

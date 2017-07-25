@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@mipmap/drawer_head_bg"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/colorTransparentHalf"
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="吗卡龙法式小面包"
+            android:textColor="@color/colorWhite"
+            android:textSize="22sp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="5dp"/>
+        <TextView
+            android:id="@+id/tv_groupcollection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收藏 1653"
+            android:textColor="@color/colorWhite"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"/>
+        <TextView
+            android:id="@+id/tv_groupread"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="阅读 53"
+            android:textColor="@color/colorWhite"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@id/tv_groupcollection"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"/>
+    </RelativeLayout>
+</RelativeLayout>
