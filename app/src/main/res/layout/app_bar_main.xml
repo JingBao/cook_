@@ -8,6 +8,7 @@
     tools:context="com.jingdroid.cook.view.activity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:fitsSystemWindows="true"
@@ -32,7 +33,10 @@
                 android:id="@+id/roll_view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:rollviewpager_play_delay="3000"/>
+                app:rollviewpager_play_delay="3000"
+                app:rollviewpager_hint_gravity="right"
+                app:rollviewpager_hint_paddingRight="20dp"
+                app:rollviewpager_hint_paddingBottom="28dp"/>
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>

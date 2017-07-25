@@ -83,6 +83,7 @@
                     android:text="最近更新"
                     android:textColor="@color/colorBlack"/>
                 <include
+                    android:id="@+id/view_group_recomment1"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     layout="@layout/view_group_layout"/>
@@ -95,6 +96,7 @@
                     android:text="法式甜点"
                     android:textColor="@color/colorBlack"/>
                 <include
+                    android:id="@+id/view_group_recomment2"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     layout="@layout/view_group_layout"/>

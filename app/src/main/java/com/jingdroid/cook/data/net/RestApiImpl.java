@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jingdroid.cook.data.entity.ArticleGroupEntity;
 import com.jingdroid.cook.data.entity.AuthorEntity;
 
 import org.json.JSONObject;
@@ -38,6 +39,27 @@ public class RestApiImpl implements RestApi {
                     String result = json.getString("users");
                     Gson gson = new Gson();
                     List<AuthorEntity> list = gson.fromJson(result, new TypeToken<List<AuthorEntity>>() {}.getType());
+                    subscriber.onNext(list);
+                    subscriber.onCompleted();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        return observable;
+    }
+
+    @Override
+    public Observable<List<ArticleGroupEntity>> loadArticleGroupData(final String json) {
+        Observable<List<ArticleGroupEntity>> observable = Observable.create(new Observable.OnSubscribe<List<ArticleGroupEntity>>() {
+            @Override
+            public void call(Subscriber<? super List<ArticleGroupEntity>> subscriber) {
+                try {
+                    String response = ApiConnection.createPost(API_GET_ARTICLE_GROUP).requestSyncCallPost(json);
+                    JSONObject json = new JSONObject(response);
+                    String result = json.getString("groups");
+                    Gson gson = new Gson();
+                    List<ArticleGroupEntity> list = gson.fromJson(result, new TypeToken<List<ArticleGroupEntity>>() {}.getType());
                     subscriber.onNext(list);
                     subscriber.onCompleted();
                 } catch (Exception e) {

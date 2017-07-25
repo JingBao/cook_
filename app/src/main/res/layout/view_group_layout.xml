@@ -5,18 +5,18 @@
     android:layout_marginTop="20dp">
 
     <ImageView
+        android:id="@+id/iv_group_bg"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@mipmap/drawer_head_bg"/>
+        android:layout_height="200dp"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@color/colorTransparentHalf"
         android:layout_alignParentBottom="true">
         <TextView
+            android:id="@+id/tv_group_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="吗卡龙法式小面包"
             android:textColor="@color/colorWhite"
             android:textSize="22sp"
             android:layout_alignParentBottom="true"

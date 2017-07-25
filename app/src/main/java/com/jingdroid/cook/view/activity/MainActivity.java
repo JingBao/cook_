@@ -2,7 +2,9 @@ package com.jingdroid.cook.view.activity;
 
 import android.graphics.Color;
 import android.net.Uri;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -24,13 +26,25 @@ import android.widget.LinearLayout;
 
 import com.jingdroid.cook.R;
 import com.jingdroid.cook.view.adapter.SimpleFragmentPagerAdapter;
+import com.jingdroid.cook.view.fragment.DessertFragment;
+import com.jingdroid.cook.view.fragment.FlavorFragment;
+import com.jingdroid.cook.view.fragment.PersonalFragment;
 import com.jingdroid.cook.view.fragment.RecommentFragment;
+import com.jingdroid.cook.view.fragment.SeaFoodFragment;
+import com.jingdroid.cook.view.widget.AppBarStateChangeListener;
 import com.jude.rollviewpager.RollPagerView;
+import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.jude.rollviewpager.adapter.StaticPagerAdapter;
 import com.jude.rollviewpager.hintview.ColorPointHintView;
+import com.jude.rollviewpager.hintview.IconHintView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,RecommentFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        RecommentFragment.OnFragmentInteractionListener,PersonalFragment.OnFragmentInteractionListener,
+        DessertFragment.OnFragmentInteractionListener,SeaFoodFragment.OnFragmentInteractionListener,FlavorFragment.OnFragmentInteractionListener {
 
     private SimpleFragmentPagerAdapter pagerAdapter;
 
@@ -40,12 +54,30 @@ public class MainActivity extends AppCompatActivity
 
     private RollPagerView mRollViewPager;
 
+    private AppBarLayout mAppBarLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                if( state == State.EXPANDED ) {
+                    //展开状态
+                    mRollViewPager.setVisibility(View.VISIBLE);
+                }else if(state == State.COLLAPSED){
+                    //折叠状态
+                    mRollViewPager.setVisibility(View.GONE);
+                }else {
+                    //中间状态
+                    mRollViewPager.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -56,7 +88,20 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        pagerAdapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), this);
+        List<Fragment> listFragmentsa = new ArrayList<Fragment>();
+        Fragment fragmentRecomment = new RecommentFragment();
+        Fragment fragmentPersnal = new PersonalFragment();
+        Fragment fragmentDessert = new DessertFragment();
+        Fragment fragmentSeafood = new SeaFoodFragment();
+        Fragment fragmentFlavor = new FlavorFragment();
+
+        listFragmentsa.add(fragmentRecomment);
+        listFragmentsa.add(fragmentPersnal);
+        listFragmentsa.add(fragmentDessert);
+        listFragmentsa.add(fragmentSeafood);
+        listFragmentsa.add(fragmentFlavor);
+
+        pagerAdapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), listFragmentsa);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(pagerAdapter);
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
@@ -70,19 +115,18 @@ public class MainActivity extends AppCompatActivity
         mRollViewPager = (RollPagerView) findViewById(R.id.roll_view_pager);
 
         //设置播放时间间隔
-        mRollViewPager.setPlayDelay(1000);
+        mRollViewPager.setPlayDelay(2000);
         //设置透明度
-        mRollViewPager.setAnimationDurtion(1000);
+        mRollViewPager.setAnimationDurtion(500);
         //设置适配器
-        mRollViewPager.setAdapter(new TestNormalAdapter());
+        mRollViewPager.setAdapter(new TestLoopAdapter(mRollViewPager));
 
         //设置指示器（顺序依次）
         //自定义指示器图片
         //设置圆点指示器颜色
         //设置文字指示器
         //隐藏指示器
-        //mRollViewPager.setHintView(new IconHintView(this, R.drawable.point_focus, R.drawable.point_normal));
-        mRollViewPager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
+        mRollViewPager.setHintView(new ColorPointHintView(this, Color.WHITE,Color.BLACK));
     }
 
     @Override
@@ -145,11 +189,15 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private class TestNormalAdapter extends StaticPagerAdapter {
+    private class TestLoopAdapter extends LoopPagerAdapter {
+
+        public TestLoopAdapter(RollPagerView viewPager) {
+            super(viewPager);
+        }
         private int[] imgs = {
                 R.mipmap.bar_bg,
-                R.mipmap.bar_bg,
-                R.mipmap.bar_bg,
+                R.mipmap.img2,
+                R.mipmap.img3,
         };
 
 
@@ -164,7 +212,7 @@ public class MainActivity extends AppCompatActivity
 
 
         @Override
-        public int getCount() {
+        public int getRealCount() {
             return imgs.length;
         }
     }

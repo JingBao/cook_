@@ -2,6 +2,7 @@ package com.jingdroid.cook.view.fragment;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,13 +10,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingdroid.cook.R;
 import com.jingdroid.cook.presentation.AuthorPresenter;
+import com.jingdroid.cook.presentation.GroupPresenter;
 import com.jingdroid.cook.presentation.application.MyApplication;
+import com.jingdroid.cook.presentation.model.ArticleGroupEntityModel;
 import com.jingdroid.cook.presentation.model.AuthorEntityModel;
 import com.jingdroid.cook.view.IAuthorView;
+import com.jingdroid.cook.view.IGroupView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -32,7 +37,7 @@ import java.util.List;
  * Use the {@link RecommentFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecommentFragment extends Fragment implements IAuthorView{
+public class RecommentFragment extends Fragment implements IAuthorView,IGroupView {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -43,26 +48,18 @@ public class RecommentFragment extends Fragment implements IAuthorView{
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
+    //编辑者信息
     private RoundedImageView[] ivHeadimg = new RoundedImageView[3];
     private TextView[] tvHeadname = new TextView[3];
     private TextView[] tvHeadsign = new TextView[3];
     private TextView[] ivAuthorArticle = new TextView[3];
     private TextView[] ivAuthorSubscribe = new TextView[3];
-
-//    private RoundedImageView ivHeadimg2;
-//    private TextView tvHeadname2;
-//    private TextView tvHeadsign2;
-//    private TextView ivAuthorArticle2;
-//    private TextView ivAuthorSubscribe2;
-//
-//    private RoundedImageView ivHeadimg3;
-//    private TextView tvHeadname3;
-//    private TextView tvHeadsign3;
-//    private TextView ivAuthorArticle3;
-//    private TextView ivAuthorSubscribe3;
+    //文章组信息
+    private ImageView[] ivGroupimg = new ImageView[2];
+    private TextView[] tvGroupTitle = new TextView[2];
 
     private AuthorPresenter mAuthorPresenter;
+    private GroupPresenter mGroupPresenter;
 
     public RecommentFragment() {
         // Required empty public constructor
@@ -94,6 +91,7 @@ public class RecommentFragment extends Fragment implements IAuthorView{
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         mAuthorPresenter = new AuthorPresenter(this);
+        mGroupPresenter = new GroupPresenter(this);
         JSONObject json = new JSONObject();
         try {
             json.put("typeid", "0");
@@ -101,6 +99,7 @@ public class RecommentFragment extends Fragment implements IAuthorView{
             e.printStackTrace();
         }
         mAuthorPresenter.getAuthor(json.toString());
+        mGroupPresenter.getGroup(json.toString());
     }
 
     @Override
@@ -124,6 +123,14 @@ public class RecommentFragment extends Fragment implements IAuthorView{
             tvHeadsign[i] = (TextView) ar[i].findViewById(R.id.tv_headsign);
             ivAuthorArticle[i] = (TextView) ar[i].findViewById(R.id.iv_author_article);
             ivAuthorSubscribe[i] = (TextView) ar[i].findViewById(R.id.iv_author_subscribe);
+        }
+
+        View[] group = new View[2];
+        group[0] = rootView.findViewById(R.id.view_group_recomment1);
+        group[1] = rootView.findViewById(R.id.view_group_recomment2);
+        for (int i = 0; i < 2; i++) {
+            ivGroupimg[i] = (ImageView) group[i].findViewById(R.id.iv_group_bg);
+            tvGroupTitle[i] = (TextView) group[i].findViewById(R.id.tv_group_title);
         }
     }
 
@@ -154,10 +161,21 @@ public class RecommentFragment extends Fragment implements IAuthorView{
     @Override
     public void loadAuthor(List<AuthorEntityModel> authors) {
         for (int i = 0; i < authors.size(); i++) {
-            tvHeadname[i].setText(authors.get(0).getAuthor_name());
-            tvHeadsign[i].setText(authors.get(0).getAuthor_sign());
-            if (authors.get(0).getAuthor_head() != null && !"".equals(authors.get(0).getAuthor_head())) {
-                ((MyApplication)(getActivity().getApplicationContext())).getImageLoader().displayImage(authors.get(0).getAuthor_head(),ivHeadimg[i]);
+            tvHeadname[i].setText(authors.get(i).getAuthor_name());
+            tvHeadsign[i].setText(authors.get(i).getAuthor_sign());
+            if (authors.get(i).getAuthor_head() != null && !"".equals(authors.get(i).getAuthor_head())) {
+                ((MyApplication)(getActivity().getApplicationContext())).getImageLoader().displayImage(authors.get(i).getAuthor_head(),ivHeadimg[i]);
+            }
+        }
+    }
+
+    @Override
+    public void loadGroup(List<ArticleGroupEntityModel> groups) {
+        for (int i = 0; i < 2; i++) {
+            tvGroupTitle[i].setText(groups.get(i).getArticle_group_title());
+            if (groups.get(i).getArticle_group_head() != null && !"".equals(groups.get(i).getArticle_group_head())) {
+                ((MyApplication)(getActivity().getApplicationContext())).getImageLoader().loadImage(groups.get(i).getArticle_group_head(),
+                        ((MyApplication)(getActivity().getApplicationContext())).getOptions(),new ImageloadOnListener(i));
             }
         }
     }
@@ -177,4 +195,22 @@ public class RecommentFragment extends Fragment implements IAuthorView{
         void onFragmentInteraction(Uri uri);
     }
 
+    private class ImageloadOnListener extends SimpleImageLoadingListener {
+
+        int index;
+        public ImageloadOnListener(int index) {
+            this.index = index;
+        }
+        @Override
+        public void onLoadingStarted(String imageUri, View view) {
+            // TODO Auto-generated method stub
+            super.onLoadingStarted(imageUri, view);
+        }
+        @Override
+        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+            Log.d("TAG", "getUserInfo:onLoadingComplete");
+//            mUserHeader.setImageBitmap(loadedImage);
+            ivGroupimg[index].setBackground(new BitmapDrawable(getResources(),loadedImage));
+        }
+    }
 }
