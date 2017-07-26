@@ -61,4 +61,10 @@ public class GroupPresenter extends BasePresenter {
 
                 });
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mIGroupView = null;
+    }
 }

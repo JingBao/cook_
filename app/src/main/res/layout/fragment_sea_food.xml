@@ -5,9 +5,143 @@
     tools:context="com.jingdroid.cook.view.fragment.SeaFoodFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/layout_comment_content"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/dessert_fragment"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/colorBlack" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:clipToPadding="false"
+                    android:paddingEnd="20dp"
+                    android:paddingStart="20dp"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RelativeLayout
+                            android:id="@+id/layout_author1"
+                            android:layout_width="240dp"
+                            android:layout_height="80dp"
+                            android:background="@drawable/item_background_material">
+
+                            <include
+                                android:id="@+id/view_author_recomment1"
+                                layout="@layout/view_author_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layout_author2"
+                            android:layout_width="240dp"
+                            android:layout_height="80dp"
+                            android:layout_marginLeft="20dp"
+                            android:background="@drawable/item_background_material">
+
+                            <include
+                                android:id="@+id/view_author_recomment2"
+                                layout="@layout/view_author_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layout_author3"
+                            android:layout_width="240dp"
+                            android:layout_height="80dp"
+                            android:layout_marginLeft="20dp"
+                            android:background="@drawable/item_background_material">
+
+                            <include
+                                android:id="@+id/view_author_recomment3"
+                                layout="@layout/view_author_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <ListView
+                            android:id="@+id/list_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:dividerHeight="10dp">
+                        </ListView>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp">
+
+                        <TextView
+                            android:id="@+id/tv_groupend"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="ฅ厨娘工艺ฅ " />
+
+                        <View
+                            android:layout_width="50dp"
+                            android:layout_height="1dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="2dp"
+                            android:layout_toLeftOf="@id/tv_groupend"
+                            android:background="@color/colorBlack" />
+
+                        <View
+                            android:layout_width="50dp"
+                            android:layout_height="1dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="2dp"
+                            android:layout_toRightOf="@id/tv_groupend"
+                            android:background="@color/colorBlack" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+        <include
+            android:id="@+id/viewloading"
+            layout="@layout/view_loading" />
+    </RelativeLayout>
 
 </FrameLayout>

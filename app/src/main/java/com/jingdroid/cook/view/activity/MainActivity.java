@@ -63,21 +63,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mAppBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
-        mAppBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
-            @Override
-            public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                if( state == State.EXPANDED ) {
-                    //展开状态
-                    mRollViewPager.setVisibility(View.VISIBLE);
-                }else if(state == State.COLLAPSED){
-                    //折叠状态
-                    mRollViewPager.setVisibility(View.GONE);
-                }else {
-                    //中间状态
-                    mRollViewPager.setVisibility(View.VISIBLE);
-                }
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -107,6 +92,7 @@ public class MainActivity extends AppCompatActivity
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        viewPager.setOffscreenPageLimit(4);
 //        FragmentManager fm = this.getSupportFragmentManager();
 //        FragmentTransaction ft = fm.beginTransaction();
 //        ft.replace(R.id.content_main_fragment, new RecommentFragment());
@@ -127,6 +113,7 @@ public class MainActivity extends AppCompatActivity
         //设置文字指示器
         //隐藏指示器
         mRollViewPager.setHintView(new ColorPointHintView(this, Color.WHITE,Color.BLACK));
+        mRollViewPager.setVisibility(View.GONE);
     }
 
     @Override
@@ -215,5 +202,13 @@ public class MainActivity extends AppCompatActivity
         public int getRealCount() {
             return imgs.length;
         }
+    }
+
+    public RollPagerView getmRollViewPager() {
+        return mRollViewPager;
+    }
+
+    public AppBarLayout getmAppBarLayout() {
+        return mAppBarLayout;
     }
 }

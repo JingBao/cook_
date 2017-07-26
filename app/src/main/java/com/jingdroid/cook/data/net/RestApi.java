@@ -14,9 +14,9 @@ import rx.Observable;
 public interface RestApi {
 //    String API_BASE_URL = "http://www.jingdroid.com/CookApplication/";
     String API_BASE_URL = "http://10.110.30.134:8080/CookApplication/";
-    /* 查询编辑者通过typeid */
+    /* 查询编辑者-通过typeid */
     String API_GET_AUTHOR = API_BASE_URL + "queryAuthorWithType";
-    /* 查询文章组通过typeid */
+    /* 查询文章组-通过typeid */
     String API_GET_ARTICLE_GROUP = API_BASE_URL + "queryGroupWithType";
 
     Observable<List<AuthorEntity>> loadAuthorData(String json);

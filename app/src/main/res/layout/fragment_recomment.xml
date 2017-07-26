@@ -5,130 +5,164 @@
     tools:context="com.jingdroid.cook.view.fragment.RecommentFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <android.support.v4.widget.NestedScrollView
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/recomment_fragment"
-            android:textColor="@color/colorBlack"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-        <HorizontalScrollView
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:clipToPadding="false"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <RelativeLayout
-                        android:layout_width="240dp"
-                        android:layout_height="80dp"
-                        android:background="@color/colorWhite">
-                        <include
-                            android:id="@+id/view_author_recomment1"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            layout="@layout/view_author_layout"/>
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_marginLeft="20dp"
-                        android:layout_width="240dp"
-                        android:layout_height="80dp"
-                        android:background="@color/colorWhite">
-                        <include
-                            android:id="@+id/view_author_recomment2"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            layout="@layout/view_author_layout"/>
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_marginLeft="20dp"
-                        android:layout_width="240dp"
-                        android:layout_height="80dp"
-                        android:background="@color/colorWhite">
-                        <include
-                            android:id="@+id/view_author_recomment3"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            layout="@layout/view_author_layout"/>
-                    </RelativeLayout>
-                </LinearLayout>
-        </HorizontalScrollView>
-        <LinearLayout
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/layout_comment_content"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="最近更新"
-                    android:textColor="@color/colorBlack"/>
-                <include
-                    android:id="@+id/view_group_recomment1"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    layout="@layout/view_group_layout"/>
-                <TextView
-                    android:layout_marginTop="20dp"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_width="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/recomment_fragment"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/colorBlack" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="法式甜点"
-                    android:textColor="@color/colorBlack"/>
-                <include
-                    android:id="@+id/view_group_recomment2"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    layout="@layout/view_group_layout"/>
+                    android:layout_marginTop="20dp"
+                    android:clipToPadding="false"
+                    android:paddingEnd="20dp"
+                    android:paddingStart="20dp"
+                    android:scrollbars="none">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/tv_groupend"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="ฅ厨娘工艺ฅ "/>
-                    <View
-                        android:layout_toLeftOf="@id/tv_groupend"
-                        android:layout_marginRight="2dp"
-                        android:layout_width="50dp"
-                        android:layout_height="1dp"
-                        android:layout_centerVertical="true"
-                        android:background="@color/colorBlack"/>
-                    <View
-                        android:layout_toRightOf="@id/tv_groupend"
-                        android:layout_marginLeft="2dp"
-                        android:layout_width="50dp"
-                        android:layout_height="1dp"
-                        android:layout_centerVertical="true"
-                        android:background="@color/colorBlack"/>
-                </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/layout_author1"
+                            android:layout_width="240dp"
+                            android:layout_height="80dp"
+                            android:background="@drawable/item_background_material">
+
+                            <include
+                                android:id="@+id/view_author_recomment1"
+                                layout="@layout/view_author_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layout_author2"
+                            android:layout_width="240dp"
+                            android:layout_height="80dp"
+                            android:layout_marginLeft="20dp"
+                            android:background="@drawable/item_background_material">
+
+                            <include
+                                android:id="@+id/view_author_recomment2"
+                                layout="@layout/view_author_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layout_author3"
+                            android:layout_width="240dp"
+                            android:layout_height="80dp"
+                            android:layout_marginLeft="20dp"
+                            android:background="@drawable/item_background_material">
+
+                            <include
+                                android:id="@+id/view_author_recomment3"
+                                layout="@layout/view_author_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:text="最近更新"
+                            android:textColor="@color/colorBlack" />
+
+                        <include
+                            android:id="@+id/view_group_recomment1"
+                            layout="@layout/view_group_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="20dp"
+                            android:text="法式甜点"
+                            android:textColor="@color/colorBlack" />
+
+                        <include
+                            android:id="@+id/view_group_recomment2"
+                            layout="@layout/view_group_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp">
+
+                            <TextView
+                                android:id="@+id/tv_groupend"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="ฅ厨娘工艺ฅ " />
+
+                            <View
+                                android:layout_width="50dp"
+                                android:layout_height="1dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="2dp"
+                                android:layout_toLeftOf="@id/tv_groupend"
+                                android:background="@color/colorBlack" />
+
+                            <View
+                                android:layout_width="50dp"
+                                android:layout_height="1dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="2dp"
+                                android:layout_toRightOf="@id/tv_groupend"
+                                android:background="@color/colorBlack" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
             </LinearLayout>
 
-        </LinearLayout>
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+        </android.support.v4.widget.NestedScrollView>
+
+        <include
+            android:id="@+id/viewloading"
+            layout="@layout/view_loading" />
+    </RelativeLayout>
 </FrameLayout>

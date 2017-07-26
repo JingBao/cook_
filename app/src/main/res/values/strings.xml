@@ -21,6 +21,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="recomment_fragment">高级厨娘</string>
+    <string name="dessert_fragment">相关厨娘</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

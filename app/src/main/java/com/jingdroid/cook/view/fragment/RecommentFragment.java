@@ -5,13 +5,19 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jingdroid.cook.R;
 import com.jingdroid.cook.presentation.AuthorPresenter;
@@ -21,6 +27,8 @@ import com.jingdroid.cook.presentation.model.ArticleGroupEntityModel;
 import com.jingdroid.cook.presentation.model.AuthorEntityModel;
 import com.jingdroid.cook.view.IAuthorView;
 import com.jingdroid.cook.view.IGroupView;
+import com.jingdroid.cook.view.activity.MainActivity;
+import com.jingdroid.cook.view.widget.AppBarStateChangeListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -37,7 +45,9 @@ import java.util.List;
  * Use the {@link RecommentFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecommentFragment extends Fragment implements IAuthorView,IGroupView {
+public class RecommentFragment extends Fragment implements IAuthorView,IGroupView,View.OnClickListener {
+
+    private static final int MSG_LOAD_COMPLETE = 0x10;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -58,9 +68,46 @@ public class RecommentFragment extends Fragment implements IAuthorView,IGroupVie
     private ImageView[] ivGroupimg = new ImageView[2];
     private TextView[] tvGroupTitle = new TextView[2];
 
+    private RelativeLayout[] mAuthorLayout = new RelativeLayout[3];
+
+    private NestedScrollView mContentView;
+    private View mLoadingView;
+
     private AuthorPresenter mAuthorPresenter;
     private GroupPresenter mGroupPresenter;
 
+    private boolean dataloadAuthorComplete;
+    private boolean dataloadGroupComplete;
+
+    private Handler mHander = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_LOAD_COMPLETE:
+                    if (dataloadAuthorComplete && dataloadGroupComplete) {
+                        mContentView.setVisibility(View.VISIBLE);
+                        mLoadingView.setVisibility(View.GONE);
+                        ((MainActivity)getActivity()).getmRollViewPager().setVisibility(View.VISIBLE);
+                        ((MainActivity)getActivity()).getmAppBarLayout().addOnOffsetChangedListener(new AppBarStateChangeListener() {
+                            @Override
+                            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                                if( state == State.EXPANDED ) {
+                                    //展开状态
+                                    ((MainActivity)getActivity()).getmRollViewPager().setVisibility(View.VISIBLE);
+                                }else if(state == State.COLLAPSED){
+                                    //折叠状态
+                                    ((MainActivity)getActivity()).getmRollViewPager().setVisibility(View.GONE);
+                                }else {
+                                    //中间状态
+                                    ((MainActivity)getActivity()).getmRollViewPager().setVisibility(View.VISIBLE);
+                                }
+                            }
+                        });
+                    }
+                    break;
+            }
+        }
+    };
     public RecommentFragment() {
         // Required empty public constructor
     }
@@ -100,6 +147,8 @@ public class RecommentFragment extends Fragment implements IAuthorView,IGroupVie
         }
         mAuthorPresenter.getAuthor(json.toString());
         mGroupPresenter.getGroup(json.toString());
+        dataloadAuthorComplete = false;
+        dataloadGroupComplete = false;
     }
 
     @Override
@@ -112,6 +161,16 @@ public class RecommentFragment extends Fragment implements IAuthorView,IGroupVie
     }
 
     private void initView(View rootView) {
+        mContentView = (NestedScrollView) rootView.findViewById(R.id.layout_comment_content);
+        mLoadingView = rootView.findViewById(R.id.viewloading);
+        View[] authors = new View[3];
+        authors[0] = rootView.findViewById(R.id.layout_author1);
+        authors[1] = rootView.findViewById(R.id.layout_author2);
+        authors[2] = rootView.findViewById(R.id.layout_author3);
+        for (int i = 0; i < 3; i++) {
+            authors[i].setOnClickListener(this);
+        }
+
         View[] ar = new View[3];
         ar[0] = rootView.findViewById(R.id.view_author_recomment1);
         ar[1] = rootView.findViewById(R.id.view_author_recomment2);
@@ -167,6 +226,8 @@ public class RecommentFragment extends Fragment implements IAuthorView,IGroupVie
                 ((MyApplication)(getActivity().getApplicationContext())).getImageLoader().displayImage(authors.get(i).getAuthor_head(),ivHeadimg[i]);
             }
         }
+        dataloadAuthorComplete = true;
+        mHander.sendEmptyMessage(MSG_LOAD_COMPLETE);
     }
 
     @Override
@@ -177,6 +238,23 @@ public class RecommentFragment extends Fragment implements IAuthorView,IGroupVie
                 ((MyApplication)(getActivity().getApplicationContext())).getImageLoader().loadImage(groups.get(i).getArticle_group_head(),
                         ((MyApplication)(getActivity().getApplicationContext())).getOptions(),new ImageloadOnListener(i));
             }
+        }
+        dataloadGroupComplete = true;
+        mHander.sendEmptyMessage(MSG_LOAD_COMPLETE);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.layout_author1:
+                Toast.makeText(getActivity(), "点击了高级厨娘", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_author2:
+                Toast.makeText(getActivity(), "点击了高级厨娘", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_author3:
+                Toast.makeText(getActivity(), "点击了高级厨娘", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
@@ -208,8 +286,6 @@ public class RecommentFragment extends Fragment implements IAuthorView,IGroupVie
         }
         @Override
         public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-            Log.d("TAG", "getUserInfo:onLoadingComplete");
-//            mUserHeader.setImageBitmap(loadedImage);
             ivGroupimg[index].setBackground(new BitmapDrawable(getResources(),loadedImage));
         }
     }
