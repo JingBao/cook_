@@ -7,4 +7,6 @@
     <color name="colorWhite">#fff</color>
     <color name="colorBlack">#000</color>
     <color name="colorTransparentHalf">#a0000000</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>
