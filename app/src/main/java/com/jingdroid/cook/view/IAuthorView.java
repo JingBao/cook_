@@ -8,6 +8,6 @@ import java.util.List;
  * Created by Jing on 2017/7/24.
  */
 
-public interface IAuthorView {
+public interface IAuthorView extends ILoadDataView{
     void loadAuthor(List<AuthorEntityModel> authors);
 }

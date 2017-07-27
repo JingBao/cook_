@@ -37,7 +37,7 @@ import java.util.List;
  * Use the {@link FlavorFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FlavorFragment extends Fragment implements IAuthorView,IGroupView,View.OnClickListener  {
+public class FlavorFragment extends BaseFragment implements IAuthorView,IGroupView,View.OnClickListener  {
 
     private static final int MSG_DATA_LOAD_COMPLETED_FLAVOR = 0x14;
     // TODO: Rename parameter arguments, choose names that match
@@ -50,23 +50,9 @@ public class FlavorFragment extends Fragment implements IAuthorView,IGroupView,V
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    //编辑者信息
-    private RoundedImageView[] ivHeadimg = new RoundedImageView[3];
-    private TextView[] tvHeadname = new TextView[3];
-    private TextView[] tvHeadsign = new TextView[3];
-    private TextView[] ivAuthorArticle = new TextView[3];
-    private TextView[] ivAuthorSubscribe = new TextView[3];
-
-    private View mLoadingView;
-    private View mContentView;
-    private ListView mListView;
-    private GroupInfoAdapter mGroupInfoAdapter;
 
     private AuthorPresenter mAuthorPresenter;
     private GroupPresenter mGroupPresenter;
-
-    private boolean dataloadAuthorComplete;
-    private boolean dataloadGroupComplete;
 
     private Handler mHander = new Handler() {
         @Override
@@ -126,36 +112,7 @@ public class FlavorFragment extends Fragment implements IAuthorView,IGroupView,V
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_flavor, container, false);
-        initView(rootView);
-        return rootView;
-    }
-    private void initView(View rootView) {
-        mLoadingView = rootView.findViewById(R.id.viewloading);
-        mContentView = rootView.findViewById(R.id.layout_comment_content);
-        mListView = (ListView) rootView.findViewById(R.id.list_group);
-        mGroupInfoAdapter = new GroupInfoAdapter(getActivity());
-        mListView.setAdapter(mGroupInfoAdapter);
-
-        View[] authors = new View[3];
-        authors[0] = rootView.findViewById(R.id.layout_author1);
-        authors[1] = rootView.findViewById(R.id.layout_author2);
-        authors[2] = rootView.findViewById(R.id.layout_author3);
-        for (int i = 0; i < 3; i++) {
-            authors[i].setOnClickListener(this);
-        }
-        View[] ar = new View[3];
-        ar[0] = rootView.findViewById(R.id.view_author_recomment1);
-        ar[1] = rootView.findViewById(R.id.view_author_recomment2);
-        ar[2] = rootView.findViewById(R.id.view_author_recomment3);
-
-        for (int i = 0; i < 3; i++) {
-            ivHeadimg[i] = (RoundedImageView) ar[i].findViewById(R.id.iv_headimg);
-            tvHeadname[i] = (TextView) ar[i].findViewById(R.id.tv_headname);
-            tvHeadsign[i] = (TextView) ar[i].findViewById(R.id.tv_headsign);
-            ivAuthorArticle[i] = (TextView) ar[i].findViewById(R.id.iv_author_article);
-            ivAuthorSubscribe[i] = (TextView) ar[i].findViewById(R.id.iv_author_subscribe);
-        }
+        return super.onCreateView(inflater,container,savedInstanceState);
     }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -188,6 +145,7 @@ public class FlavorFragment extends Fragment implements IAuthorView,IGroupView,V
 
     @Override
     public void loadAuthor(List<AuthorEntityModel> authors) {
+        mAuthors = authors;
         for (int i = 0; i < authors.size(); i++) {
             if (i == 3)
                 break;
@@ -210,6 +168,31 @@ public class FlavorFragment extends Fragment implements IAuthorView,IGroupView,V
         mHander.sendEmptyMessage(MSG_DATA_LOAD_COMPLETED_FLAVOR);
     }
 
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showRetry() {
+
+    }
+
+    @Override
+    public void hideRetry() {
+
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -223,28 +206,5 @@ public class FlavorFragment extends Fragment implements IAuthorView,IGroupView,V
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-    public void setListViewHeightBasedOnChildren(ListView listView) {
-        // 获取ListView对应的Adapter
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
-
-        int totalHeight = 0;
-        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
-            // listAdapter.getCount()返回数据项的数目
-            View listItem = listAdapter.getView(i, null, listView);
-            // 计算子项View 的宽高
-            listItem.measure(0, 0);
-            // 统计所有子项的总高度
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        // listView.getDividerHeight()获取子项间分隔符占用的高度
-        // params.height最后得到整个ListView完整显示需要的高度
-        listView.setLayoutParams(params);
     }
 }

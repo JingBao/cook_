@@ -22,6 +22,7 @@ import com.jingdroid.cook.presentation.GroupPresenter;
 import com.jingdroid.cook.presentation.application.MyApplication;
 import com.jingdroid.cook.presentation.model.ArticleGroupEntityModel;
 import com.jingdroid.cook.presentation.model.AuthorEntityModel;
+import com.jingdroid.cook.presentation.navigation.Navigator;
 import com.jingdroid.cook.view.IAuthorView;
 import com.jingdroid.cook.view.IGroupView;
 import com.jingdroid.cook.view.activity.MainActivity;
@@ -43,7 +44,7 @@ import java.util.List;
  * Use the {@link DessertFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DessertFragment extends Fragment implements IAuthorView,IGroupView,View.OnClickListener {
+public class DessertFragment extends BaseFragment implements IAuthorView,IGroupView,View.OnClickListener {
 
     private static final int MSG_DATA_LOAD_COMPLETED_DESSERT = 0x12;
     // TODO: Rename parameter arguments, choose names that match
@@ -56,24 +57,8 @@ public class DessertFragment extends Fragment implements IAuthorView,IGroupView,
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
-    //编辑者信息
-    private RoundedImageView[] ivHeadimg = new RoundedImageView[3];
-    private TextView[] tvHeadname = new TextView[3];
-    private TextView[] tvHeadsign = new TextView[3];
-    private TextView[] ivAuthorArticle = new TextView[3];
-    private TextView[] ivAuthorSubscribe = new TextView[3];
-
-    private View mLoadingView;
-    private View mContentView;
-    private ListView mListView;
-    private GroupInfoAdapter mGroupInfoAdapter;
-
     private AuthorPresenter mAuthorPresenter;
     private GroupPresenter mGroupPresenter;
-
-    private boolean dataloadAuthorComplete;
-    private boolean dataloadGroupComplete;
 
     private Handler mHander = new Handler() {
         @Override
@@ -133,38 +118,9 @@ public class DessertFragment extends Fragment implements IAuthorView,IGroupView,
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_dessert, container, false);
-        initView(rootView);
-        return rootView;
+        return super.onCreateView(inflater,container,savedInstanceState);
     }
 
-    private void initView(View rootView) {
-        mLoadingView = rootView.findViewById(R.id.viewloading);
-        mContentView = rootView.findViewById(R.id.layout_comment_content);
-        mListView = (ListView) rootView.findViewById(R.id.list_group);
-        mGroupInfoAdapter = new GroupInfoAdapter(getActivity());
-        mListView.setAdapter(mGroupInfoAdapter);
-
-        View[] authors = new View[3];
-        authors[0] = rootView.findViewById(R.id.layout_author1);
-        authors[1] = rootView.findViewById(R.id.layout_author2);
-        authors[2] = rootView.findViewById(R.id.layout_author3);
-        for (int i = 0; i < 3; i++) {
-            authors[i].setOnClickListener(this);
-        }
-        View[] ar = new View[3];
-        ar[0] = rootView.findViewById(R.id.view_author_recomment1);
-        ar[1] = rootView.findViewById(R.id.view_author_recomment2);
-        ar[2] = rootView.findViewById(R.id.view_author_recomment3);
-
-        for (int i = 0; i < 3; i++) {
-            ivHeadimg[i] = (RoundedImageView) ar[i].findViewById(R.id.iv_headimg);
-            tvHeadname[i] = (TextView) ar[i].findViewById(R.id.tv_headname);
-            tvHeadsign[i] = (TextView) ar[i].findViewById(R.id.tv_headsign);
-            ivAuthorArticle[i] = (TextView) ar[i].findViewById(R.id.iv_author_article);
-            ivAuthorSubscribe[i] = (TextView) ar[i].findViewById(R.id.iv_author_subscribe);
-        }
-    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -192,6 +148,7 @@ public class DessertFragment extends Fragment implements IAuthorView,IGroupView,
 
     @Override
     public void loadAuthor(List<AuthorEntityModel> authors) {
+        mAuthors = authors;
         for (int i = 0; i < authors.size(); i++) {
             if (i == 3)
                 break;
@@ -216,6 +173,41 @@ public class DessertFragment extends Fragment implements IAuthorView,IGroupView,
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.layout_author1:
+                Navigator.getInstance().navigateToAuthorInfoActivity(getActivity(), mAuthors.get(0));
+                break;
+            case R.id.layout_author2:
+                Navigator.getInstance().navigateToAuthorInfoActivity(getActivity(), mAuthors.get(1));
+                break;
+            case R.id.layout_author3:
+                Navigator.getInstance().navigateToAuthorInfoActivity(getActivity(), mAuthors.get(2));
+                break;
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showRetry() {
+
+    }
+
+    @Override
+    public void hideRetry() {
+
+    }
+
+    @Override
+    public void showError(String message) {
 
     }
 
@@ -234,27 +226,4 @@ public class DessertFragment extends Fragment implements IAuthorView,IGroupView,
         void onFragmentInteraction(Uri uri);
     }
 
-    public void setListViewHeightBasedOnChildren(ListView listView) {
-        // 获取ListView对应的Adapter
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
-
-        int totalHeight = 0;
-        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
-            // listAdapter.getCount()返回数据项的数目
-            View listItem = listAdapter.getView(i, null, listView);
-            // 计算子项View 的宽高
-            listItem.measure(0, 0);
-            // 统计所有子项的总高度
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        // listView.getDividerHeight()获取子项间分隔符占用的高度
-        // params.height最后得到整个ListView完整显示需要的高度
-        listView.setLayoutParams(params);
-    }
 }

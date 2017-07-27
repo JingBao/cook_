@@ -1,9 +1,11 @@
 package com.jingdroid.cook.presentation;
 
 import com.jingdroid.cook.data.IAuthorModel;
+import com.jingdroid.cook.data.entity.ArticleGroupEntity;
 import com.jingdroid.cook.data.entity.AuthorEntity;
 import com.jingdroid.cook.data.repository.AuthorModel;
 import com.jingdroid.cook.presentation.mapper.ModelDataMapper;
+import com.jingdroid.cook.presentation.model.ArticleGroupEntityModel;
 import com.jingdroid.cook.presentation.model.AuthorEntityModel;
 import com.jingdroid.cook.view.IAuthorView;
 

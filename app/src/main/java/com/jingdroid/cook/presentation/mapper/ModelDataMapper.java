@@ -1,7 +1,9 @@
 package com.jingdroid.cook.presentation.mapper;
 
+import com.jingdroid.cook.data.entity.ArticleEntity;
 import com.jingdroid.cook.data.entity.ArticleGroupEntity;
 import com.jingdroid.cook.data.entity.AuthorEntity;
+import com.jingdroid.cook.presentation.model.ArticleEntityModel;
 import com.jingdroid.cook.presentation.model.ArticleGroupEntityModel;
 import com.jingdroid.cook.presentation.model.AuthorEntityModel;
 
@@ -71,5 +73,17 @@ public class ModelDataMapper {
             }
         }
         return list;
+    }
+
+    public ArticleEntityModel transform_article(ArticleEntity entity) {
+        ArticleEntityModel model = new ArticleEntityModel();
+        model.setArticle_id(entity.getArticle_id());
+        model.setArticle_title(entity.getArticle_title());
+        model.setArticle_context(entity.getArticle_context());
+        model.setArticle_quantity(entity.getArticle_quantity());
+        model.setArticle_groupid(entity.getArticle_groupid());
+        model.setAuthorid(entity.getAuthorid());
+        model.setTypeid(entity.getTypeid());
+        return model;
     }
 }

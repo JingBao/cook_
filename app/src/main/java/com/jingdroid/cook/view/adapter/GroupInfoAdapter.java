@@ -1,8 +1,13 @@
 package com.jingdroid.cook.view.adapter;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +20,7 @@ import com.jingdroid.cook.presentation.GroupPresenter;
 import com.jingdroid.cook.presentation.application.MyApplication;
 import com.jingdroid.cook.presentation.model.ArticleGroupEntityModel;
 import com.jingdroid.cook.view.fragment.RecommentFragment;
+import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
@@ -30,12 +36,15 @@ public class GroupInfoAdapter extends BaseAdapter {
 
     private Context context;
     private List<ArticleGroupEntityModel> list = new ArrayList<>();
+
     public GroupInfoAdapter(Context context) {
         this.context = context;
     }
+
     public void setListData(List<ArticleGroupEntityModel> list) {
         this.list = list;
     }
+
     @Override
     public int getCount() {
         return list.size();
@@ -54,7 +63,7 @@ public class GroupInfoAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder mHolder = null;
-        if (convertView == null ) {
+        if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_group_layout, null);
             mHolder = new ViewHolder();
             mHolder.iv_group_bg = (ImageView) convertView.findViewById(R.id.iv_group_bg);
@@ -65,8 +74,8 @@ public class GroupInfoAdapter extends BaseAdapter {
         }
         mHolder.tv_group_title.setText(list.get(position).getArticle_group_title());
         if (list.get(position).getArticle_group_head() != null && !"".equals(list.get(position).getArticle_group_head())) {
-            ((MyApplication)(context.getApplicationContext())).getImageLoader().loadImage(list.get(position).getArticle_group_head(),
-                    ((MyApplication)(context.getApplicationContext())).getOptions(),new ImageloadOnListener(mHolder.iv_group_bg));
+            ((MyApplication) (context.getApplicationContext())).getImageLoader().displayImage(list.get(position).getArticle_group_head(),
+                    new BgImageViewAware(mHolder.iv_group_bg));
         }
         return convertView;
     }
@@ -76,20 +85,37 @@ public class GroupInfoAdapter extends BaseAdapter {
         TextView tv_group_title;
     }
 
-    private class ImageloadOnListener extends SimpleImageLoadingListener {
+    public class BgImageViewAware extends ImageViewAware {
 
         ImageView imageView;
-        public ImageloadOnListener(ImageView imageView) {
+
+        public BgImageViewAware(ImageView imageView) {
+            this(imageView, true);
+        }
+
+        public BgImageViewAware(ImageView imageView, boolean checkActualViewSize) {
+            super(imageView, checkActualViewSize);
             this.imageView = imageView;
         }
+
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override
-        public void onLoadingStarted(String imageUri, View view) {
-            // TODO Auto-generated method stub
-            super.onLoadingStarted(imageUri, view);
+        public boolean setImageBitmap(Bitmap bitmap) {
+            //重写父类方法，将图片设为背景
+            if (Looper.myLooper() == Looper.getMainLooper()) {
+//                ImageView imageView = (ImageView)this.viewRef.get();
+                if (imageView != null) {
+                    imageView.setBackground(new BitmapDrawable(bitmap));
+                    return true;
+                }
+            }
+            return false;
         }
+
         @Override
-        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-            imageView.setBackground(new BitmapDrawable(context.getResources(),loadedImage));
+        public boolean setImageDrawable(Drawable drawable) {
+            return super.setImageDrawable(drawable);
         }
     }
+
 }

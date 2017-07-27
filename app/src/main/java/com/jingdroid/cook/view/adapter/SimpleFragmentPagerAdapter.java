@@ -1,13 +1,9 @@
 package com.jingdroid.cook.view.adapter;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.jingdroid.cook.view.fragment.PageFragment;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +24,7 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-//        return PageFragment.newInstance(position + 1);
+//        return BaseFragment.newInstance(position + 1);
         return listFragments.get(position);
     }
 

@@ -1,5 +1,6 @@
 package com.jingdroid.cook.data;
 
+import com.jingdroid.cook.data.entity.ArticleEntity;
 import com.jingdroid.cook.data.entity.ArticleGroupEntity;
 import com.jingdroid.cook.data.entity.AuthorEntity;
 
@@ -13,4 +14,5 @@ import rx.Observable;
 
 public interface IArticleGroupModel {
     Observable<List<ArticleGroupEntity>> loadGroupWithType(String json);
+    Observable<ArticleEntity> loadArticleInfo(String json);
 }

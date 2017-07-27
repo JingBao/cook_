@@ -1,15 +1,42 @@
 package com.jingdroid.cook.presentation.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Jing on 2017/7/24.
  */
 
-public class AuthorEntityModel {
+public class AuthorEntityModel implements Parcelable{
     private int author_id;
     private String author_name;
     private String author_head;
     private String author_sign;
     private int typeid;
+
+    public AuthorEntityModel() {
+
+    }
+
+    private AuthorEntityModel(Parcel in) {
+        author_id = in.readInt();
+        author_name = in.readString();
+        author_head = in.readString();
+        author_sign = in.readString();
+        typeid = in.readInt();
+    }
+
+    public static final Creator<AuthorEntityModel> CREATOR = new Creator<AuthorEntityModel>() {
+        @Override
+        public AuthorEntityModel createFromParcel(Parcel in) {
+            return new AuthorEntityModel(in);
+        }
+
+        @Override
+        public AuthorEntityModel[] newArray(int size) {
+            return new AuthorEntityModel[size];
+        }
+    };
 
     public int getAuthor_id() {
         return author_id;
@@ -49,5 +76,19 @@ public class AuthorEntityModel {
 
     public void setTypeid(int typeid) {
         this.typeid = typeid;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(author_id);
+        dest.writeString(author_name);
+        dest.writeString(author_head);
+        dest.writeString(author_sign);
+        dest.writeInt(typeid);
     }
 }
