@@ -17,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.jingdroid.cook.view.fragment.FlavorFragment;
 import com.jingdroid.cook.view.fragment.PersonalFragment;
 import com.jingdroid.cook.view.fragment.RecommentFragment;
 import com.jingdroid.cook.view.fragment.SeaFoodFragment;
+import com.jingdroid.cook.view.fragment.SearchRevealFragment;
 import com.jingdroid.cook.view.widget.AppBarStateChangeListener;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
@@ -40,6 +42,8 @@ import com.jude.rollviewpager.hintview.IconHintView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.design.R.styleable.NavigationView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -52,6 +56,8 @@ public class MainActivity extends AppCompatActivity
 
     private TabLayout tabLayout;
 
+    private ImageView mSearchView;
+
     private RollPagerView mRollViewPager;
 
     private AppBarLayout mAppBarLayout;
@@ -61,7 +67,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        mSearchView = (ImageView) findViewById(R.id.iv_toolbar_search);
         mAppBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -114,13 +122,39 @@ public class MainActivity extends AppCompatActivity
         //隐藏指示器
         mRollViewPager.setHintView(new ColorPointHintView(this, Color.WHITE,Color.BLACK));
         mRollViewPager.setVisibility(View.GONE);
+
+        final SearchRevealFragment mfragment = new SearchRevealFragment();
+        mSearchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mfragment.isVisible()) {
+                    mfragment.onBackPressed();
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("searchImg_x", mSearchView.getLeft());
+                    bundle.putInt("searchImg_t", mSearchView.getTop());
+                    bundle.putInt("searchImg_w", mSearchView.getWidth());
+                    bundle.putInt("searchImg_h", mSearchView.getHeight());
+                    mfragment.setArguments(bundle);
+
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(android.R.id.content, mfragment, "fragment_my")
+                            .addToBackStack("fragment:reveal")
+                            .commit();
+                }
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
+        Log.d("MainActivity", "onBackPressed");
+        SearchRevealFragment fragment = (SearchRevealFragment) getSupportFragmentManager().findFragmentByTag("fragment_my");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        if (drawer.isDrawerOpen(GravityCompat.START) || fragment != null) {
             drawer.closeDrawer(GravityCompat.START);
+            fragment.onBackPressed();
         } else {
             super.onBackPressed();
         }
@@ -129,7 +163,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+//        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -141,7 +175,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_search) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(android.R.id.content, new SearchRevealFragment(), "fragment_my")
+                    .addToBackStack("fragment:reveal")
+                    .commit();
             return true;
         }
 

@@ -13,8 +13,8 @@ import rx.Observable;
  */
 
 public interface RestApi {
-//    String API_BASE_URL = "http://www.jingdroid.com/CookApplication/";
-    String API_BASE_URL = "http://10.110.30.134:8080/CookApplication/";
+    String API_BASE_URL = "http://www.jingdroid.com/CookApplication/";
+//    String API_BASE_URL = "http://10.110.30.134:8080/CookApplication/";
 
     /* 查询编辑者-通过typeid */
     String API_GET_AUTHOR = API_BASE_URL + "queryAuthorWithType";
