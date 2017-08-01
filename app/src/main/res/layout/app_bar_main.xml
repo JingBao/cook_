@@ -26,6 +26,7 @@
                 android:id="@+id/roll_view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
                 app:rollviewpager_play_delay="3000"
                 app:rollviewpager_hint_gravity="right"
                 app:rollviewpager_hint_paddingRight="20dp"

@@ -2,6 +2,7 @@ package com.jingdroid.cook.view.activity;
 
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.jingdroid.cook.R;
@@ -56,6 +59,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
+
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
@@ -122,6 +134,7 @@ public class MainActivity extends AppCompatActivity
         //隐藏指示器
         mRollViewPager.setHintView(new ColorPointHintView(this, Color.WHITE,Color.BLACK));
         mRollViewPager.setVisibility(View.GONE);
+        mRollViewPager.pause();
 
         final SearchRevealFragment mfragment = new SearchRevealFragment();
         mSearchView.setOnClickListener(new View.OnClickListener() {
