@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,7 +47,7 @@ import java.util.List;
  * Use the {@link RecommentFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecommentFragment extends BaseFragment implements IAuthorView,IGroupView,View.OnClickListener {
+public class RecommentFragment extends BaseFragment implements IAuthorView,IGroupView,View.OnClickListener,AdapterView.OnItemClickListener {
 
     private static final int MSG_LOAD_COMPLETE = 0x10;
     // TODO: Rename parameter arguments, choose names that match
@@ -204,6 +205,7 @@ public class RecommentFragment extends BaseFragment implements IAuthorView,IGrou
         setListViewHeightBasedOnChildren(mListView);
         dataloadGroupComplete = true;
         mHander.sendEmptyMessage(MSG_LOAD_COMPLETE);
+        mListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -260,6 +262,24 @@ public class RecommentFragment extends BaseFragment implements IAuthorView,IGrou
      */
     @Override
     public void showError(String message) {
+
+    }
+
+    /**
+     * Callback method to be invoked when an item in this AdapterView has
+     * been clicked.
+     * <p>
+     * Implementers can call getItemAtPosition(position) if they need
+     * to access the data associated with the selected item.
+     *
+     * @param parent   The AdapterView where the click happened.
+     * @param view     The view within the AdapterView that was clicked (this
+     *                 will be a view provided by the adapter)
+     * @param position The position of the view in the adapter.
+     * @param id       The row id of the item that was clicked.
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
     }
 

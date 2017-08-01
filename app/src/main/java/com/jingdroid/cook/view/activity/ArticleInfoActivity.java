@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -33,7 +34,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-public class ArticleInfoActivity extends AppCompatActivity implements IAuthorInfoView {
+public class ArticleInfoActivity extends AppCompatActivity implements IAuthorInfoView,View.OnClickListener {
 
     private static final String INTENT_EXTRA_PARAMS_GROUPID = "groupid";
     private ImageButton ibBack;
@@ -68,6 +69,7 @@ public class ArticleInfoActivity extends AppCompatActivity implements IAuthorInf
         ibCollection = (ImageButton) findViewById(R.id.ib_collection);
         ibShare = (ImageButton) findViewById(R.id.ib_share);
         tvArticleContent = (TextView) findViewById(R.id.tv_article_content);
+        ibBack.setOnClickListener(this);
     }
 
     @Override
@@ -134,6 +136,20 @@ public class ArticleInfoActivity extends AppCompatActivity implements IAuthorInf
     }
 
     /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ib_back:
+                finish();
+                break;
+        }
+    }
+
+    /**
      * 重写图片加载接口
      *
      * @author Ruffian
@@ -148,7 +164,7 @@ public class ArticleInfoActivity extends AppCompatActivity implements IAuthorInf
         public Drawable getDrawable(String source) {
             LevelListDrawable d = new LevelListDrawable();
             Drawable empty = getResources().getDrawable(
-                    R.mipmap.ic_launcher);
+                    R.mipmap.ic_photo_size_select_actual_black_48dp);
             d.addLevel(0, 0, empty);
             d.setBounds(0, 0, empty.getIntrinsicWidth(),
                     empty.getIntrinsicHeight());

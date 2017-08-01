@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,13 +28,14 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class AuthorInfoActivity extends AppCompatActivity implements IAuthorInfoView,AdapterView.OnItemClickListener {
+public class AuthorInfoActivity extends AppCompatActivity implements IAuthorInfoView,AdapterView.OnItemClickListener,View.OnClickListener {
 
     public static final String INTENT_EXTRA_PARAMS = "author";
 
     private AuthorEntityModel author;
 
     private RoundedImageView ivHeadimg;
+    private ImageButton mBackBtn;
     private TextView tvHeadname;
     private TextView tvHeadsign;
     private Button btnSubscribe;
@@ -64,15 +66,18 @@ public class AuthorInfoActivity extends AppCompatActivity implements IAuthorInfo
     }
 
     private void initView() {
+        mBackBtn = (ImageButton) findViewById(R.id.ib_back);
         ivHeadimg = (RoundedImageView) findViewById(R.id.iv_headimg);
         tvHeadname = (TextView) findViewById(R.id.tv_headname);
         tvHeadsign = (TextView) findViewById(R.id.tv_headsign);
         btnSubscribe = (Button) findViewById(R.id.btn_subscribe);
         tvSubscribe = (TextView) findViewById(R.id.tv_subscribe);
         listAuthorGroup = (ListView) findViewById(R.id.list_author_group);
+
         mAdapter = new AuthorGroupInfoAdapter(this);
         listAuthorGroup.setAdapter(mAdapter);
         listAuthorGroup.setOnItemClickListener(this);
+        mBackBtn.setOnClickListener(this);
     }
 
     private void setDataInfo() {
@@ -151,5 +156,19 @@ public class AuthorInfoActivity extends AppCompatActivity implements IAuthorInfo
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         int groupid = ((ArticleGroupEntityModel)(parent.getItemAtPosition(position))).getArticle_group_id();
         Navigator.getInstance().navigateToArticleInfoActivity(this, groupid);
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ib_back:
+                finish();
+                break;
+        }
     }
 }

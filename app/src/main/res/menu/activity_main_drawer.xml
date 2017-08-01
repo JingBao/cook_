@@ -5,15 +5,15 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@mipmap/ic_visibility_black_36dp"
             android:title="@string/drawer_menu_title1" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@mipmap/ic_content_copy_black_36dp"
             android:title="@string/drawer_menu_title2" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@mipmap/ic_content_paste_black_36dp"
             android:title="@string/drawer_menu_title3" />
     </group>
 
@@ -22,11 +22,11 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_collection"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@mipmap/ic_loyalty_black_36dp"
             android:title="@string/drawer_menu_title4" />
         <item
             android:id="@+id/nav_subscribe"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@mipmap/ic_photo_album_black_36dp"
             android:title="@string/drawer_menu_title5" />
     </group>
 
@@ -35,19 +35,19 @@
         android:checkableBehavior="single">
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@mipmap/ic_share_black_24dp"
                 android:title="分享" />
             <item
                 android:id="@+id/nav_about"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@mipmap/ic_style_black_36dp"
                 android:title="@string/drawer_menu_title6" />
             <item
                 android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@mipmap/ic_delete_forever_black_36dp"
                 android:title="@string/drawer_menu_title7" />
             <item
                 android:id="@+id/nav_exit"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@mipmap/ic_filter_vintage_black_36dp"
                 android:title="@string/drawer_menu_title8" />
     </group>
 

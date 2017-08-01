@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.jingdroid.cook.presentation.model.AuthorEntityModel;
 import com.jingdroid.cook.view.activity.ArticleInfoActivity;
 import com.jingdroid.cook.view.activity.AuthorInfoActivity;
+import com.jingdroid.cook.view.activity.UserInfoActivity;
 
 /**
  * Created by Jing on 2017/7/27.
@@ -45,6 +46,17 @@ public class Navigator {
     public void navigateToArticleInfoActivity(Context context, int groupid) {
         if (context != null) {
             Intent intentToLaunch = ArticleInfoActivity.getCallingIntent(context, groupid);
+            context.startActivity(intentToLaunch);
+        }
+    }
+
+    /**
+     * 用户信息
+     * @param context
+     */
+    public void navigateToUserInfoActivity(Context context) {
+        if (context != null) {
+            Intent intentToLaunch = UserInfoActivity.getCallingIntent(context);
             context.startActivity(intentToLaunch);
         }
     }

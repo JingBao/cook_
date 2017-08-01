@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:layout_marginTop="15dp"
-    android:background="@android:color/transparent"
     android:orientation="vertical">
 
     <io.codetail.widget.RevealFrameLayout
@@ -40,8 +39,11 @@
                     android:inputType="textPersonName"
                     android:layout_marginLeft="13dp"
                     android:layout_marginRight="13dp"
-                    android:textColor="#333333"
-                    android:textColorHint="#cccccc">
+                    android:background="@null"
+                    android:drawableBottom="@drawable/shape_search_edit"
+                    android:textSize="15sp"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff">
 
                     <requestFocus />
                 </EditText>
@@ -59,14 +61,13 @@
             </io.codetail.widget.RevealLinearLayout>
 
             <LinearLayout
-                android:layout_marginLeft="13dp"
-                android:layout_marginRight="13dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:id="@+id/items"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:background="#ffffff"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:paddingLeft="10dp"

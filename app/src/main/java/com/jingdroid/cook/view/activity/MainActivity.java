@@ -5,12 +5,8 @@ import android.net.Uri;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -23,9 +19,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.jingdroid.cook.R;
+import com.jingdroid.cook.presentation.navigation.Navigator;
 import com.jingdroid.cook.view.adapter.SimpleFragmentPagerAdapter;
 import com.jingdroid.cook.view.fragment.DessertFragment;
 import com.jingdroid.cook.view.fragment.FlavorFragment;
@@ -33,17 +29,12 @@ import com.jingdroid.cook.view.fragment.PersonalFragment;
 import com.jingdroid.cook.view.fragment.RecommentFragment;
 import com.jingdroid.cook.view.fragment.SeaFoodFragment;
 import com.jingdroid.cook.view.fragment.SearchRevealFragment;
-import com.jingdroid.cook.view.widget.AppBarStateChangeListener;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
-import com.jude.rollviewpager.adapter.StaticPagerAdapter;
 import com.jude.rollviewpager.hintview.ColorPointHintView;
-import com.jude.rollviewpager.hintview.IconHintView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.support.design.R.styleable.NavigationView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -80,6 +71,15 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerLayout = navigationView.getHeaderView(0);
+        headerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigator.getInstance().navigateToUserInfoActivity(MainActivity.this);
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
 
         List<Fragment> listFragmentsa = new ArrayList<Fragment>();
         Fragment fragmentRecomment = new RecommentFragment();
@@ -195,6 +195,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
