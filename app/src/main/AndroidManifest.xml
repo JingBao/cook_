@@ -35,8 +35,14 @@
         -->
         <activity
             android:name=".view.activity.UserInfoActivity"
+            android:configChanges="keyboardHidden"
             android:label="@string/title_activity_user_info"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name=".view.activity.ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

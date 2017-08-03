@@ -12,4 +12,5 @@
         android:layout_height="wrap_content"
         my:circleRadius="6dp"
         my:cycle="1500" />
+
 </LinearLayout>

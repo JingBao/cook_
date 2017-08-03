@@ -2,30 +2,35 @@ package com.jingdroid.cook.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.jingdroid.cook.R;
+import com.jingdroid.cook.presentation.utils.AndroidBug5497Workaround;
+import com.jingdroid.cook.view.adapter.UserInfoImgAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserInfoActivity extends AppCompatActivity {
+public class UserInfoActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
+    private EditText mName;
     private GridView mGridImg;
-    private SimpleAdapter simpleAdapter;
-    private List<Map<String,Object>> data;
-    private int[] icon = {R.mipmap.drawer_head_bg, R.mipmap.drawer_head_bg,
-            R.mipmap.drawer_head_bg, R.mipmap.drawer_head_bg,
-            R.mipmap.drawer_head_bg, R.mipmap.drawer_head_bg};
+    private UserInfoImgAdapter simpleAdapter;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, UserInfoActivity.class);
@@ -35,29 +40,38 @@ public class UserInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("个人信息");
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
+        mName = (EditText) findViewById(R.id.ed_user_name);
         mGridImg = (GridView) findViewById(R.id.gv_user_img);
-
-        data = new ArrayList<>();
-        getData();
-        //新建适配器
-        String [] from ={"image"};
-        int [] to = {R.id.image};
-        simpleAdapter = new SimpleAdapter(this,data, R.layout.item_user_info_grid,from,to);
-
+        mName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Log.d("user", "onFocusChange");
+            }
+        });
+        AndroidBug5497Workaround.assistActivity(this);
+        simpleAdapter = new UserInfoImgAdapter(this);
         mGridImg.setAdapter(simpleAdapter);
+        mGridImg.setOnItemClickListener(this);
     }
 
-    public List<Map<String, Object>> getData(){
-        //cion和iconName的长度是相同的，这里任选其一都可以
-        for(int i=0;i<icon.length;i++){
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("image", icon[i]);
-            data.add(map);
-        }
-
-        return data;
+    /**
+     * Callback method to be invoked when an item in this AdapterView has
+     * been clicked.
+     * <p>
+     * Implementers can call getItemAtPosition(position) if they need
+     * to access the data associated with the selected item.
+     *
+     * @param parent   The AdapterView where the click happened.
+     * @param view     The view within the AdapterView that was clicked (this
+     *                 will be a view provided by the adapter)
+     * @param position The position of the view in the adapter.
+     * @param id       The row id of the item that was clicked.
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(this, "选择:"+position ,Toast.LENGTH_LONG).show();
     }
 }
