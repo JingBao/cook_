@@ -9,6 +9,7 @@
 
     <color name="colorGrey">#EDEDED</color>
     <color name="colorWhite">#fff</color>
+    <color name="colorfafafa">#fafafa</color>
     <color name="colorBlack">#000</color>
     <color name="colorGreen">#008B45</color>
     <color name="colorTransparentHalf">#a0000000</color>

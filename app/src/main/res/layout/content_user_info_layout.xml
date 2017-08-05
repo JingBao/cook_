@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/iv_headimg"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/colorfafafa"
+        app:riv_border_color="#333333"
+        app:riv_oval="true" />
+
+    <TextView
+        android:id="@+id/tv_headname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_headimg"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorBlack"/>
+
+    <TextView
+        android:id="@+id/tv_headsign"
+        android:layout_width="200dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorBlack"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_headname" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_headname"
+        android:layout_marginTop="15dp">
+
+        <Button
+            android:id="@+id/btn_subscribe"
+            android:layout_width="70dp"
+            android:layout_height="23dp"
+            android:background="@drawable/shape_author_subscribe"
+            android:gravity="center"
+            android:text="订阅"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tv_subscribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_subscribe"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorBlack"
+            android:text="1145订阅者" />
+    </RelativeLayout>
+
+</RelativeLayout>
