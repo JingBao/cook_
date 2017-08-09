@@ -44,6 +44,16 @@
                     android:background="@mipmap/ic_arrow_back_black_36dp"/>
             </android.support.v7.widget.Toolbar>
 
+            <TextView
+                android:id="@+id/tv_author_title"
+                style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:layout_margin="40dp"
+                android:text="标题"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/float_title_size_large" />
             <include
                 android:id="@+id/layout_user_info"
                 layout="@layout/content_user_info_layout"

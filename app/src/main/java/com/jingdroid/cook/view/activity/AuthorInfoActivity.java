@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -49,6 +50,14 @@ public class AuthorInfoActivity extends AppCompatActivity implements IAuthorInfo
     private ListView listAuthorGroup;
     private Toolbar toolbar;
     private AuthorGroupInfoAdapter mAdapter;
+    private CollapsingToolbarLayout toolbarLayout;
+    private TextView floatTitle;
+    //测量值
+    private float headerHeight;//顶部高度
+    private float minHeaderHeight;//顶部最低高度，即Bar的高度
+    private float floatTitleLeftMargin;//header标题文字左偏移量
+    private float floatTitleSize;//header标题文字大小
+    private float floatTitleSizeLarge;//header标题文字大小（大号）
 
     public static Intent getCallingIntent(Context context, AuthorEntityModel author) {
         Intent callingIntent = new Intent(context, AuthorInfoActivity.class);
@@ -60,11 +69,14 @@ public class AuthorInfoActivity extends AppCompatActivity implements IAuthorInfo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_author_info);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("");
-        toolbar.setTitleTextColor(Color.BLACK);
+        toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        floatTitle = (TextView) findViewById(R.id.tv_author_title);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         author = getIntent().getParcelableExtra(INTENT_EXTRA_PARAMS);
+        floatTitle.setText(author.getAuthor_name());
         initView();
+        initMeasure();
         setDataInfo();
         AuthorInfoPresenter mPresenter = new AuthorInfoPresenter(this);
         JSONObject json = new JSONObject();
@@ -81,17 +93,22 @@ public class AuthorInfoActivity extends AppCompatActivity implements IAuthorInfo
                 if( state == State.EXPANDED ) {
                     //展开状态
                     mUserDetail.setVisibility(View.VISIBLE);
-                    toolbar.setTitle("");
-                    setSupportActionBar(toolbar);
+                    floatTitle.setVisibility(View.GONE);
                 }else if(state == State.COLLAPSED){
                     //折叠状态
                     mUserDetail.setVisibility(View.GONE);
-                    toolbar.setTitle(author.getAuthor_name());
+                    floatTitle.setVisibility(View.VISIBLE);
                 }else {
                     //中间状态
                     mUserDetail.setVisibility(View.GONE);
-                    toolbar.setTitle(author.getAuthor_name());
+                    floatTitle.setVisibility(View.VISIBLE);
                 }
+            }
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+                super.onOffsetChanged(appBarLayout, i);
+                scroll(i);
             }
         });
     }
@@ -204,5 +221,56 @@ public class AuthorInfoActivity extends AppCompatActivity implements IAuthorInfo
                 finish();
                 break;
         }
+    }
+
+    private void initMeasure() {
+        headerHeight = getResources().getDimension(R.dimen.header_height);
+        minHeaderHeight = getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
+        floatTitleLeftMargin = getResources().getDimension(R.dimen.float_title_left_margin);
+        floatTitleSize = getResources().getDimension(R.dimen.float_title_size);
+        floatTitleSizeLarge = getResources().getDimension(R.dimen.float_title_size_large);
+    }
+
+    private void scroll(int y) {
+        //Y轴偏移量
+//        float scrollY = toolbarLayout.getScrollY();
+        float scrollY = -y;
+
+        //变化率
+        float headerBarOffsetY = headerHeight - minHeaderHeight;//Toolbar与header高度的差值
+        float offset = 1 - Math.max((headerBarOffsetY - scrollY) / headerBarOffsetY, 0f);
+
+        Log.d("scroll", "headerBarOffsetY:"+headerBarOffsetY + ",offset:"+offset);
+        //Toolbar背景色透明度
+        floatTitle.setTextColor(Color.argb((int) (offset * 255), 0, 0, 0));
+        //header背景图Y轴偏移
+//        headerBg.setTranslationY(scrollY / 2);
+
+        /*** 标题文字处理 ***/
+        //标题文字缩放圆心（X轴）
+        floatTitle.setPivotX(floatTitle.getLeft() + floatTitle.getPaddingLeft());
+        //标题文字缩放比例
+        float titleScale = floatTitleSize / floatTitleSizeLarge;
+        //标题文字X轴偏移
+        floatTitle.setTranslationX(floatTitleLeftMargin * (1-offset));
+        //标题文字Y轴偏移：（-缩放高度差 + 大文字与小文字高度差）/ 2 * 变化率 + Y轴滑动偏移
+        floatTitle.setTranslationY(
+                (-(floatTitle.getHeight() - minHeaderHeight) +//-缩放高度差
+                        floatTitle.getHeight() * (1 - titleScale))//大文字与小文字高度差
+                        / 2 * offset +
+                        (headerHeight - floatTitle.getHeight() ) * (1-offset/10) - floatTitle.getHeight()/2);//Y轴滑动偏移
+        //标题文字X轴缩放
+        floatTitle.setScaleX(1 - offset * (1 - titleScale));
+        //标题文字Y轴缩放
+        floatTitle.setScaleY(1 - offset * (1 - titleScale));
+
+        //判断标题文字的显示
+//        if (scrollY > headerBarOffsetY) {
+//            toolbar.setTitle(getResources().getString(R.string.toolbar_title));
+//            floatTitle.setVisibility(View.GONE);
+//        } else {
+//            toolbar.setTitle("");
+//            floatTitle.setVisibility(View.VISIBLE);
+//        }
     }
 }
