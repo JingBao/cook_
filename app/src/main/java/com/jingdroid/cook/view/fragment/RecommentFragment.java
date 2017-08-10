@@ -89,22 +89,7 @@ public class RecommentFragment extends BaseFragment implements IAuthorView,IGrou
                     if (dataloadAuthorComplete && dataloadGroupComplete) {
                         mContentView.setVisibility(View.VISIBLE);
                         mLoadingView.setVisibility(View.GONE);
-                        ((MainActivity)getActivity()).getmRollViewPager().setVisibility(View.VISIBLE);
-                        ((MainActivity)getActivity()).getmAppBarLayout().addOnOffsetChangedListener(new AppBarStateChangeListener() {
-                            @Override
-                            public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                                if( state == State.EXPANDED ) {
-                                    //展开状态
-                                    ((MainActivity)getActivity()).getmRollViewPager().setVisibility(View.VISIBLE);
-                                }else if(state == State.COLLAPSED){
-                                    //折叠状态
-                                    ((MainActivity)getActivity()).getmRollViewPager().setVisibility(View.GONE);
-                                }else {
-                                    //中间状态
-                                    ((MainActivity)getActivity()).getmRollViewPager().setVisibility(View.VISIBLE);
-                                }
-                            }
-                        });
+                        ((MainActivity)getActivity()).updateStatus();
                     }
                     break;
             }

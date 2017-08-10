@@ -1,5 +1,6 @@
 package com.jingdroid.cook.view.activity;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -11,6 +12,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -32,14 +34,16 @@ import com.jingdroid.cook.view.fragment.PersonalFragment;
 import com.jingdroid.cook.view.fragment.RecommentFragment;
 import com.jingdroid.cook.view.fragment.SeaFoodFragment;
 import com.jingdroid.cook.view.fragment.SearchRevealFragment;
+import com.jingdroid.cook.view.widget.AppBarStateChangeListener;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.jude.rollviewpager.hintview.ColorPointHintView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         RecommentFragment.OnFragmentInteractionListener,PersonalFragment.OnFragmentInteractionListener,
         DessertFragment.OnFragmentInteractionListener,SeaFoodFragment.OnFragmentInteractionListener,FlavorFragment.OnFragmentInteractionListener {
@@ -55,31 +59,33 @@ public class MainActivity extends AppCompatActivity
     private RollPagerView mRollViewPager;
 
     private AppBarLayout mAppBarLayout;
+    ActionBarDrawerToggle toggle;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        }
-
-
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            Window window = getWindow();
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            window.setStatusBarColor(Color.TRANSPARENT);
+//        }
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("");
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("首页");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         mSearchView = (ImageView) findViewById(R.id.iv_toolbar_search);
         mAppBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+        toolbar.setNavigationIcon(R.mipmap.ic_menu_white_36dp);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -162,7 +168,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        Log.d("MainActivity", "onBackPressed");
         SearchRevealFragment fragment = (SearchRevealFragment) getSupportFragmentManager().findFragmentByTag("fragment_my");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START) || fragment != null) {
@@ -264,4 +269,39 @@ public class MainActivity extends AppCompatActivity
     public AppBarLayout getmAppBarLayout() {
         return mAppBarLayout;
     }
+
+    public void updateStatus() {
+        mRollViewPager.setVisibility(View.VISIBLE);
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                if( state == State.EXPANDED ) {
+                    //展开状态
+                    mRollViewPager.setVisibility(View.VISIBLE);
+                    setMeizuStatusBarDarkIcon(MainActivity.this, false);
+                    toggle.syncState();
+                    toolbar.setNavigationIcon(R.mipmap.ic_menu_white_36dp);
+                    mSearchView.setImageResource(R.mipmap.ic_search_white_36dp);
+                    getSupportActionBar().setDisplayShowTitleEnabled(false);
+                }else if(state == State.COLLAPSED){
+                    //折叠状态
+                    mRollViewPager.setVisibility(View.GONE);
+                    setMeizuStatusBarDarkIcon(MainActivity.this, true);
+                    toggle.syncState();
+                    toolbar.setNavigationIcon(R.mipmap.ic_menu_black_36dp);
+                    mSearchView.setImageResource(R.mipmap.ic_search_black_36dp);
+                    getSupportActionBar().setDisplayShowTitleEnabled(true);
+                }else {
+                    //中间状态
+                    mRollViewPager.setVisibility(View.VISIBLE);
+                    setMeizuStatusBarDarkIcon(MainActivity.this, false);
+                    toggle.syncState();
+                    toolbar.setNavigationIcon(R.mipmap.ic_menu_white_36dp);
+                    mSearchView.setImageResource(R.mipmap.ic_search_white_36dp);
+                    getSupportActionBar().setDisplayShowTitleEnabled(false);
+                }
+            }
+        });
+    }
+
 }

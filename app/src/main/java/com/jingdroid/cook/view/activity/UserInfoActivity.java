@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserInfoActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class UserInfoActivity extends BaseActivity implements AdapterView.OnItemClickListener{
 
     private EditText mName;
     private GridView mGridImg;
@@ -39,22 +39,23 @@ public class UserInfoActivity extends AppCompatActivity implements AdapterView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
+        setMeizuStatusBarDarkIcon(this, true);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar.setTitle("");
+//        setSupportActionBar(toolbar);
 
         mName = (EditText) findViewById(R.id.ed_user_name);
-        mGridImg = (GridView) findViewById(R.id.gv_user_img);
-        mName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Log.d("user", "onFocusChange");
-            }
-        });
-        AndroidBug5497Workaround.assistActivity(this);
-        simpleAdapter = new UserInfoImgAdapter(this);
-        mGridImg.setAdapter(simpleAdapter);
-        mGridImg.setOnItemClickListener(this);
+//        mGridImg = (GridView) findViewById(R.id.gv_user_img);
+//        mName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                Log.d("user", "onFocusChange");
+//            }
+//        });
+//        AndroidBug5497Workaround.assistActivity(this);
+//        simpleAdapter = new UserInfoImgAdapter(this);
+//        mGridImg.setAdapter(simpleAdapter);
+//        mGridImg.setOnItemClickListener(this);
     }
 
     /**

@@ -42,7 +42,7 @@
                     android:id="@+id/iv_toolbar_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_search"
+                    android:src="@mipmap/ic_search_white_36dp"
                     android:cropToPadding="true"
                     android:padding="5dp"
                     android:layout_gravity="right"

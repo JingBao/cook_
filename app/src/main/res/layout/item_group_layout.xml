@@ -16,5 +16,5 @@
         android:id="@+id/view_group_recomment"
         layout="@layout/view_group_layout"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="180dp" />
 </LinearLayout>

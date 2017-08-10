@@ -33,7 +33,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class AuthorInfoActivity extends AppCompatActivity implements IAuthorInfoView,AdapterView.OnItemClickListener,View.OnClickListener {
+public class AuthorInfoActivity extends BaseActivity implements IAuthorInfoView,AdapterView.OnItemClickListener,View.OnClickListener {
 
     public static final String INTENT_EXTRA_PARAMS = "author";
 
@@ -68,6 +68,7 @@ public class AuthorInfoActivity extends AppCompatActivity implements IAuthorInfo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_author_info);
+        setMeizuStatusBarDarkIcon(this, true);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         floatTitle = (TextView) findViewById(R.id.tv_author_title);
@@ -258,7 +259,7 @@ public class AuthorInfoActivity extends AppCompatActivity implements IAuthorInfo
                 (-(floatTitle.getHeight() - minHeaderHeight) +//-缩放高度差
                         floatTitle.getHeight() * (1 - titleScale))//大文字与小文字高度差
                         / 2 * offset +
-                        (headerHeight - floatTitle.getHeight() ) * (1-offset/10) - floatTitle.getHeight()/2);//Y轴滑动偏移
+                        (headerHeight - floatTitle.getHeight() ) * (1-offset/12) - floatTitle.getHeight()/4);//Y轴滑动偏移
         //标题文字X轴缩放
         floatTitle.setScaleX(1 - offset * (1 - titleScale));
         //标题文字Y轴缩放
