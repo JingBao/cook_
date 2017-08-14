@@ -8,18 +8,17 @@
     android:fitsSystemWindows="true"
     tools:context="com.jingdroid.cook.view.activity.UserInfoActivity">
 
-    <LinearLayout
+    <android.support.design.widget.CollapsingToolbarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <RelativeLayout
+        <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:fitsSystemWindows="true"
             app:popupTheme="@style/AppTheme.PopupOverlay" >
             <ImageView
                 android:id="@+id/iv_back"
@@ -49,17 +48,21 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="right"
                 android:layout_marginRight="20dp"/>
-        </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
         <!--
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:background="@drawable/shape_user_info_gradient"/>
             -->
-    </LinearLayout>
+    </android.support.design.widget.CollapsingToolbarLayout>
 
-    <include layout="@layout/content_user_info"
-        android:fitsSystemWindows="true"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/content_user_info"
+            android:id="@+id/content_user_info"/>
+    </ScrollView>
 
 
 </LinearLayout>
