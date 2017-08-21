@@ -1,6 +1,7 @@
 package com.jingdroid.cook.view.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -24,6 +25,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jingdroid.cook.R;
 import com.jingdroid.cook.presentation.navigation.Navigator;
@@ -48,17 +50,18 @@ public class MainActivity extends BaseActivity
         RecommentFragment.OnFragmentInteractionListener,PersonalFragment.OnFragmentInteractionListener,
         DessertFragment.OnFragmentInteractionListener,SeaFoodFragment.OnFragmentInteractionListener,FlavorFragment.OnFragmentInteractionListener {
 
+    private static final int REQEUST_CODE = 0x11;
+
     private SimpleFragmentPagerAdapter pagerAdapter;
-
     private ViewPager viewPager;
-
     private TabLayout tabLayout;
-
     private ImageView mSearchView;
-
     private RollPagerView mRollViewPager;
-
     private AppBarLayout mAppBarLayout;
+    private View headerLayout;
+    private TextView tvHeaderName;
+    private TextView tvHeaderSign;
+
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
 
@@ -89,15 +92,18 @@ public class MainActivity extends BaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View headerLayout = navigationView.getHeaderView(0);
+        headerLayout = navigationView.getHeaderView(0);
         headerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigator.getInstance().navigateToUserInfoActivity(MainActivity.this);
+                Navigator.getInstance().navigateToUserInfoActivity(MainActivity.this,tvHeaderName.getText().toString(),
+                        tvHeaderSign.getText().toString(),  REQEUST_CODE);
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
             }
         });
+        tvHeaderName = (TextView) headerLayout.findViewById(R.id.tv_header_name);
+        tvHeaderSign = (TextView) headerLayout.findViewById(R.id.tv_header_sign);
 
         List<Fragment> listFragmentsa = new ArrayList<Fragment>();
         Fragment fragmentRecomment = new RecommentFragment();
@@ -119,11 +125,6 @@ public class MainActivity extends BaseActivity
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         viewPager.setOffscreenPageLimit(4);
-//        FragmentManager fm = this.getSupportFragmentManager();
-//        FragmentTransaction ft = fm.beginTransaction();
-//        ft.replace(R.id.content_main_fragment, new RecommentFragment());
-//        ft.commit();
-
         mRollViewPager = (RollPagerView) findViewById(R.id.roll_view_pager);
 
         //设置播放时间间隔
@@ -215,7 +216,7 @@ public class MainActivity extends BaseActivity
             // Handle the camera action
 
         } else if (id == R.id.nav_gallery) {
-
+            Navigator.getInstance().navigateToCookersActivity(this);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_share) {
@@ -262,14 +263,6 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    public RollPagerView getmRollViewPager() {
-        return mRollViewPager;
-    }
-
-    public AppBarLayout getmAppBarLayout() {
-        return mAppBarLayout;
-    }
-
     public void updateStatus() {
         mRollViewPager.setVisibility(View.VISIBLE);
         mAppBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
@@ -304,4 +297,18 @@ public class MainActivity extends BaseActivity
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQEUST_CODE && resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            int resourceId = bundle.getInt("resourceId");
+            String name = bundle.getString("name");
+            String sign = bundle.getString("sign");
+            if (resourceId != 0) {
+                headerLayout.setBackgroundResource(resourceId);
+            }
+            tvHeaderName.setText(name);
+            tvHeaderSign.setText(sign);
+        }
+    }
 }

@@ -2,12 +2,14 @@ package com.jingdroid.cook.view.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 /**
  * Created by Jing on 2017/8/2.
  */
-public class SquareLayout extends RelativeLayout {
+public class SquareLayout extends LinearLayout {
     public SquareLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }

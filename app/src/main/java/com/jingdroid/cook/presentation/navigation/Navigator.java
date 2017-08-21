@@ -1,11 +1,13 @@
 package com.jingdroid.cook.presentation.navigation;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
 import com.jingdroid.cook.presentation.model.AuthorEntityModel;
 import com.jingdroid.cook.view.activity.ArticleInfoActivity;
 import com.jingdroid.cook.view.activity.AuthorInfoActivity;
+import com.jingdroid.cook.view.activity.CookersActivity;
 import com.jingdroid.cook.view.activity.UserInfoActivity;
 
 /**
@@ -37,7 +39,6 @@ public class Navigator {
             context.startActivity(intentToLaunch);
         }
     }
-
     /**
      * article信息页
      * @param context
@@ -49,14 +50,24 @@ public class Navigator {
             context.startActivity(intentToLaunch);
         }
     }
-
     /**
      * 用户信息
      * @param context
      */
-    public void navigateToUserInfoActivity(Context context) {
+    public void navigateToUserInfoActivity(Context context, String name, String sign, int requestCode) {
         if (context != null) {
-            Intent intentToLaunch = UserInfoActivity.getCallingIntent(context);
+            Intent intentToLaunch = UserInfoActivity.getCallingIntent(context, name, sign);
+            ((Activity)context).startActivityForResult(intentToLaunch, requestCode);
+        }
+    }
+
+    /**
+     * 所有厨娘
+     * @param context
+     */
+    public void navigateToCookersActivity(Context context) {
+        if (context != null) {
+            Intent intentToLaunch = CookersActivity.getCallingIntent(context);
             context.startActivity(intentToLaunch);
         }
     }

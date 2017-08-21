@@ -17,8 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="封面图"
-            android:background="@color/colorGrey"/>
+            android:text="封面图"/>
         <GridView
             android:id="@+id/gv_user_img"
             android:layout_marginTop="10dp"
@@ -26,10 +25,10 @@
             android:layout_marginRight="15dp"
             android:numColumns="3"
             android:listSelector="@drawable/shape_user_img"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp"
+            android:verticalSpacing="15dp"
+            android:horizontalSpacing="15dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="200dp">
 
         </GridView>
         <TextView
@@ -55,6 +54,7 @@
             android:layout_height="wrap_content"
             android:text="个性签名"/>
         <EditText
+            android:id="@+id/ed_user_sign"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"

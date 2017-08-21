@@ -5,30 +5,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 
 import com.jingdroid.cook.R;
+import com.jingdroid.cook.presentation.model.AuthorEntityModel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Created by Jing on 2017/8/2.
+ * Created by Jing on 2017/8/21.
  */
 
-public class UserInfoImgAdapter extends BaseAdapter {
+public class CookersAdapter extends BaseAdapter {
 
-    private int[] icon = {R.mipmap.drawer_head_bg, R.mipmap.cover_1,
-            R.mipmap.cover_2, R.mipmap.cover_3,
-            R.mipmap.cover_4, R.mipmap.cover_5};
-    private List<Integer> data = new ArrayList<>();
     private Context context;
+    private List<AuthorEntityModel> list;
 
-    public UserInfoImgAdapter(Context context) {
-        getData();
+    public CookersAdapter (Context context, List<AuthorEntityModel> list) {
         this.context = context;
+        this.list = list;
     }
     /**
      * How many items are in the data set represented by this Adapter.
@@ -37,7 +31,7 @@ public class UserInfoImgAdapter extends BaseAdapter {
      */
     @Override
     public int getCount() {
-        return data.size();
+        return list.size();
     }
 
     /**
@@ -49,7 +43,7 @@ public class UserInfoImgAdapter extends BaseAdapter {
      */
     @Override
     public Object getItem(int position) {
-        return data.get(position);
+        return null;
     }
 
     /**
@@ -83,17 +77,10 @@ public class UserInfoImgAdapter extends BaseAdapter {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = LayoutInflater.from(context).inflate(R.layout.item_user_info_grid, null);
-        ImageView img = (ImageView) convertView.findViewById(R.id.gv_img);
-        img.setBackgroundResource(data.get(position));
-        return convertView;
-    }
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_cooker_author_layout, null);
 
-    public List getData(){
-        for(int i=0;i<icon.length;i++){
-            data.add(icon[i]);
         }
-
-        return data;
+        return convertView;
     }
 }

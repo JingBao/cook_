@@ -123,4 +123,5 @@
     </string>
 
     <string name="toolbar_title">Toolbar Title</string>
+    <string name="title_activity_cookers">CookersActivity</string>
 </resources>

@@ -21,19 +21,22 @@
         app:srcCompat="@android:drawable/sym_def_app_icon" />
     -->
     <TextView
+        android:id="@+id/tv_header_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/drawer_head_text1"
         android:textSize="22sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/colorWhite"/>
+        android:textColor="@color/colorWhite"
+        android:maxLength="6"/>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_header_sign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/drawer_head_text２"
-        android:textColor="@color/colorWhite"/>
+        android:textColor="@color/colorWhite"
+        android:paddingRight="20dp"/>
 
 </LinearLayout>
