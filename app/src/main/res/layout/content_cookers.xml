@@ -5,10 +5,7 @@
     android:id="@+id/content_cookers"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="2dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jingdroid.cook.view.activity.CookersActivity"
     tools:showIn="@layout/app_bar_cookers">
@@ -16,7 +13,15 @@
     <ListView
         android:id="@+id/list_cookers"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorGrey">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+        android:divider="@drawable/shape_cookers_list_divider"
+        android:dividerHeight="1dp"
+        android:background="@drawable/shape_cookers_list">
     </ListView>
+
+
 </RelativeLayout>

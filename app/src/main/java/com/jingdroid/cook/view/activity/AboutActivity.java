@@ -20,15 +20,11 @@ import com.jingdroid.cook.view.adapter.CookersAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CookersActivity extends BaseActivity
+public class AboutActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ListView listCookers;
-    private CookersAdapter mAdapter;
-    private List<AuthorEntityModel> list;
-
     public static Intent getCallingIntent(Context context) {
-        return new Intent(context, CookersActivity.class);
+        return new Intent(context, AboutActivity.class);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +35,9 @@ public class CookersActivity extends BaseActivity
             //透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
-        setContentView(R.layout.activity_cookers);
+        setContentView(R.layout.activity_about);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("厨娘");
+        toolbar.setTitle("关于厨娘");
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -54,14 +50,6 @@ public class CookersActivity extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        listCookers = (ListView) findViewById(R.id.list_cookers);
-        list = new ArrayList<>();
-        for(int i = 0;i < 10; i++) {
-            AuthorEntityModel model = new AuthorEntityModel();
-            list.add(model);
-        }
-        mAdapter = new CookersAdapter(this, list);
-        listCookers.setAdapter(mAdapter);
     }
 
     @Override

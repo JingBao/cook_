@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.jingdroid.cook.presentation.model.AuthorEntityModel;
+import com.jingdroid.cook.view.activity.AboutActivity;
 import com.jingdroid.cook.view.activity.ArticleInfoActivity;
 import com.jingdroid.cook.view.activity.AuthorInfoActivity;
 import com.jingdroid.cook.view.activity.CookersActivity;
@@ -68,6 +69,17 @@ public class Navigator {
     public void navigateToCookersActivity(Context context) {
         if (context != null) {
             Intent intentToLaunch = CookersActivity.getCallingIntent(context);
+            context.startActivity(intentToLaunch);
+        }
+    }
+
+    /**
+     * 关于厨娘
+     * @param context
+     */
+    public void navigateToAboutActivity(Context context) {
+        if (context != null) {
+            Intent intentToLaunch = AboutActivity.getCallingIntent(context);
             context.startActivity(intentToLaunch);
         }
     }

@@ -44,6 +44,11 @@
             android:label="@string/title_activity_cookers"
             android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTask"></activity>
+        <activity
+            android:name=".view.activity.AboutActivity"
+            android:label="@string/title_activity_cookers"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask"></activity>
     </application>
 
 </manifest>

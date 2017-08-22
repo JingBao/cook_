@@ -5,9 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jingdroid.cook.R;
 import com.jingdroid.cook.presentation.model.AuthorEntityModel;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
 
@@ -77,10 +81,60 @@ public class CookersAdapter extends BaseAdapter {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder = null;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_cooker_author_layout, null);
-
+            viewHolder = new ViewHolder();
+            viewHolder.ivHeadimg = (RoundedImageView) convertView.findViewById(R.id.iv_cookers_headimg);
+            viewHolder.tvHeadname = (TextView) convertView.findViewById(R.id.tv_headname);
+            viewHolder.tvHeadsign = (TextView) convertView.findViewById(R.id.tv_headsign);
+            viewHolder.ivCookersAdd = (ImageView) convertView.findViewById(R.id.iv_cookers_add);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
+        if (!list.get(position).isAdd()) {
+            viewHolder.ivCookersAdd.setImageResource(R.mipmap.ic_add_black_36dp);
+        } else {
+            viewHolder.ivCookersAdd.setImageResource(R.mipmap.check_alt_32x32);
+        }
+
+        viewHolder.ivCookersAdd.setOnClickListener(new AddOnClickListener(viewHolder.ivCookersAdd, position));
         return convertView;
+    }
+
+    public class ViewHolder {
+        RoundedImageView ivHeadimg;
+        TextView tvHeadname;
+        TextView tvHeadsign;
+        ImageView ivCookersAdd;
+    }
+    boolean isAdd = false;
+    public class AddOnClickListener implements View.OnClickListener {
+
+        ImageView addImg;
+        int index;
+        public AddOnClickListener(ImageView ivCookersAdd, int index) {
+            this.addImg = ivCookersAdd;
+            this.index = index;
+        }
+        /**
+         * Called when a view has been clicked.
+         *
+         * @param v The view that was clicked.
+         */
+        @Override
+        public void onClick(View v) {
+            if (!isAdd) {
+                Toast.makeText(context, "添加厨娘成功", Toast.LENGTH_SHORT).show();
+                this.addImg.setImageResource(R.mipmap.check_alt_32x32);
+                isAdd = true;
+                list.get(index).setAdd(true);
+            } else {
+                this.addImg.setImageResource(R.mipmap.ic_add_black_36dp);
+                isAdd = false;
+                list.get(index).setAdd(false);
+            }
+        }
     }
 }

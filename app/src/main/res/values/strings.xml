@@ -11,8 +11,8 @@
     <string name="drawer_head_text２">登录来收藏和订阅你感兴趣的内容</string>
 
     <string name="drawer_menu_title1">首页</string>
-    <string name="drawer_menu_title2">查看所有厨娘</string>
-    <string name="drawer_menu_title3">查看所有美食</string>
+    <string name="drawer_menu_title2">查看全部厨娘</string>
+    <string name="drawer_menu_title3">查看全部美食</string>
     <string name="drawer_menu_title4">我的收藏</string>
     <string name="drawer_menu_title5">我订阅的厨娘</string>
     <string name="drawer_menu_title6">关于厨娘</string>
@@ -23,6 +23,7 @@
     <string name="recomment_fragment">高级厨娘</string>
     <string name="dessert_fragment">相关厨娘</string>
 
+    <string name="text_about">像吉本芭娜娜一样。\n在这个世界上，我最喜欢的地方就是厨房。\n我爱厨房里的全部情绪。\n一点儿天赋，一丝紧张慌乱，转而镇静。\n下料的谨慎，\n飘浮的油烟和一颗想做好事情的心，\n那仿佛就是我的人生。</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

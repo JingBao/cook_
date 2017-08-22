@@ -1,6 +1,7 @@
 package com.jingdroid.cook.view.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -221,8 +222,12 @@ public class MainActivity extends BaseActivity
 
         } else if (id == R.id.nav_share) {
 
+        } else if (id == R.id.nav_about) {
+            Navigator.getInstance().navigateToAboutActivity(this);
         } else if (id == R.id.nav_send) {
-
+            showExitDialog("", "确认要清除所有缓存数据吗", new DialogClickListener(DIALOG_PARAMS_DELCACHE));
+        } else if (id == R.id.nav_exit) {
+            showExitDialog("", "确认要退出登录吗", new DialogClickListener(DIALOG_PARAMS_EXIT));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -309,6 +314,34 @@ public class MainActivity extends BaseActivity
             }
             tvHeaderName.setText(name);
             tvHeaderSign.setText(sign);
+        }
+    }
+
+    private static final int DIALOG_PARAMS_EXIT = 0x92;
+    private static final int DIALOG_PARAMS_DELCACHE = 0x93;
+    public class DialogClickListener implements DialogInterface.OnClickListener {
+
+        int index;
+        public DialogClickListener(int index) {
+            this.index = index;
+        }
+        /**
+         * This method will be invoked when a button in the dialog is clicked.
+         *
+         * @param dialog The dialog that received the click.
+         * @param which  The button that was clicked (e.g.
+         *               {@link DialogInterface#BUTTON1}) or the position
+         */
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (this.index) {
+                case DIALOG_PARAMS_EXIT:
+                    finish();
+                    break;
+                case DIALOG_PARAMS_DELCACHE:
+                    dialog.cancel();
+                    break;
+            }
         }
     }
 }

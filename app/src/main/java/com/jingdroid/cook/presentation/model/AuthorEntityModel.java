@@ -13,6 +13,7 @@ public class AuthorEntityModel implements Parcelable{
     private String author_head;
     private String author_sign;
     private int typeid;
+    private boolean isAdd;
 
     public AuthorEntityModel() {
 
@@ -78,6 +79,13 @@ public class AuthorEntityModel implements Parcelable{
         this.typeid = typeid;
     }
 
+    public boolean isAdd() {
+        return isAdd;
+    }
+
+    public void setAdd(boolean add) {
+        isAdd = add;
+    }
     @Override
     public int describeContents() {
         return 0;
