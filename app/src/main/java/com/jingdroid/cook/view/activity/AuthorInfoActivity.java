@@ -206,8 +206,10 @@ public class AuthorInfoActivity extends BaseActivity implements IAuthorInfoView,
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        int groupid = ((ArticleGroupEntityModel)(parent.getItemAtPosition(position))).getArticle_group_id();
-        Navigator.getInstance().navigateToArticleInfoActivity(this, groupid);
+        ArticleGroupEntityModel model = ((ArticleGroupEntityModel)(parent.getItemAtPosition(position)));
+        int groupid = model.getArticle_group_id();
+        String name = model.getArticle_group_title();
+        Navigator.getInstance().navigateToArticleInfoActivity(this, groupid, name);
     }
 
     /**

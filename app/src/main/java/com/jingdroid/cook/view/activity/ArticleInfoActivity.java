@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -34,17 +35,22 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-public class ArticleInfoActivity extends AppCompatActivity implements IAuthorInfoView,View.OnClickListener {
+public class ArticleInfoActivity extends BaseActivity implements IAuthorInfoView,View.OnClickListener {
 
     private static final String INTENT_EXTRA_PARAMS_GROUPID = "groupid";
+    private static final String INTENT_EXTRA_PARAMS_NAME = "name";
     private ImageButton ibBack;
     private ImageButton ibShare;
     private ImageButton ibCollection;
     private TextView tvArticleContent;
+    private TextView tvArticleTitle;
 
-    public static Intent getCallingIntent(Context context, int groupid) {
+    private String mName;
+
+    public static Intent getCallingIntent(Context context, int groupid, String name) {
         Intent callingIntent = new Intent(context, ArticleInfoActivity.class);
         callingIntent.putExtra(INTENT_EXTRA_PARAMS_GROUPID, groupid);
+        callingIntent.putExtra(INTENT_EXTRA_PARAMS_NAME, name);
         return callingIntent;
     }
 
@@ -52,7 +58,9 @@ public class ArticleInfoActivity extends AppCompatActivity implements IAuthorInf
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_info);
+        setMeizuStatusBarDarkIcon(this, true);
         int groupid = getIntent().getIntExtra(INTENT_EXTRA_PARAMS_GROUPID, 0);
+        mName = getIntent().getStringExtra(INTENT_EXTRA_PARAMS_NAME);
         initView();
         ArticlePresenter mPresenter = new ArticlePresenter(this);
         JSONObject json = new JSONObject();
@@ -69,7 +77,9 @@ public class ArticleInfoActivity extends AppCompatActivity implements IAuthorInf
         ibCollection = (ImageButton) findViewById(R.id.ib_collection);
         ibShare = (ImageButton) findViewById(R.id.ib_share);
         tvArticleContent = (TextView) findViewById(R.id.tv_article_content);
+        tvArticleTitle = (TextView) findViewById(R.id.tv_article_title);
         ibBack.setOnClickListener(this);
+        tvArticleTitle.setText(mName);
     }
 
     @Override
@@ -80,7 +90,11 @@ public class ArticleInfoActivity extends AppCompatActivity implements IAuthorInf
     @Override
     public void loadArticleInfo(ArticleEntityModel article) {
         HtmlImageGetter htmlImageGetter = new HtmlImageGetter();
-        tvArticleContent.setText(Html.fromHtml(article.getArticle_context(), htmlImageGetter, null));
+        Spanned spanned = Html.fromHtml(article.getArticle_context(), htmlImageGetter, null);
+        Log.d("ArticleInfoActivity", "spanned:"+article.getArticle_context().replace("\n", ""));
+        Log.d("ArticleInfoActivity", "spanned:"+spanned.toString().replace("\n", "换行"));
+
+        tvArticleContent.setText(spanned);
     }
 
     /**
@@ -185,7 +199,6 @@ public class ArticleInfoActivity extends AppCompatActivity implements IAuthorInf
             @Override
             protected Bitmap doInBackground(Object... params) {
                 String source = (String) params[0];
-                Log.d("TAG", "doInBackground:" + source);
                 mDrawable = (LevelListDrawable) params[1];
                 try {
                     InputStream is = new URL(source).openStream();
@@ -226,7 +239,6 @@ public class ArticleInfoActivity extends AppCompatActivity implements IAuthorInf
                      * mtvActNewsContent:我项目中使用的textView
                      *
                      */
-                    Log.d("TAG", "onPostExecute:");
                     tvArticleContent.invalidate();
                     CharSequence t = tvArticleContent.getText();
                     tvArticleContent.setText(t);

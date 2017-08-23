@@ -45,9 +45,9 @@ public class Navigator {
      * @param context
      * @param groupid
      */
-    public void navigateToArticleInfoActivity(Context context, int groupid) {
+    public void navigateToArticleInfoActivity(Context context, int groupid, String name ) {
         if (context != null) {
-            Intent intentToLaunch = ArticleInfoActivity.getCallingIntent(context, groupid);
+            Intent intentToLaunch = ArticleInfoActivity.getCallingIntent(context, groupid, name);
             context.startActivity(intentToLaunch);
         }
     }
