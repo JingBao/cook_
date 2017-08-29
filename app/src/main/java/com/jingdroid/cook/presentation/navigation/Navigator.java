@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.jingdroid.cook.presentation.model.AuthorEntityModel;
 import com.jingdroid.cook.view.activity.AboutActivity;
+import com.jingdroid.cook.view.activity.ArticleGroupActivity;
 import com.jingdroid.cook.view.activity.ArticleInfoActivity;
 import com.jingdroid.cook.view.activity.AuthorInfoActivity;
 import com.jingdroid.cook.view.activity.CookersActivity;
@@ -80,6 +81,16 @@ public class Navigator {
     public void navigateToAboutActivity(Context context) {
         if (context != null) {
             Intent intentToLaunch = AboutActivity.getCallingIntent(context);
+            context.startActivity(intentToLaunch);
+        }
+    }
+    /**
+     * 关于文章组
+     * @param context
+     */
+    public void navigateToArticleGroupActivity(Context context) {
+        if (context != null) {
+            Intent intentToLaunch = ArticleGroupActivity.getCallingIntent(context);
             context.startActivity(intentToLaunch);
         }
     }

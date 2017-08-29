@@ -11,12 +11,15 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jingdroid.cook.R;
 import com.jingdroid.cook.presentation.ArticlePresenter;
@@ -27,6 +30,7 @@ import com.jingdroid.cook.view.IAuthorInfoView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xml.sax.XMLReader;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -90,9 +94,8 @@ public class ArticleInfoActivity extends BaseActivity implements IAuthorInfoView
     @Override
     public void loadArticleInfo(ArticleEntityModel article) {
         HtmlImageGetter htmlImageGetter = new HtmlImageGetter();
-        Spanned spanned = Html.fromHtml(article.getArticle_context(), htmlImageGetter, null);
-        Log.d("ArticleInfoActivity", "spanned:"+article.getArticle_context().replace("\n", ""));
-        Log.d("ArticleInfoActivity", "spanned:"+spanned.toString().replace("\n", "换行"));
+        Spanned spanned = Html.fromHtml(article.getArticle_context().replace("<p", "<a").replace("</p>", "</a>"), htmlImageGetter, null);
+        Log.d("ArticleInfoActivity", "spanned:"+article.getArticle_context().replace("<p", "<a").replace("</p>", "</a>"));
 
         tvArticleContent.setText(spanned);
     }
@@ -137,16 +140,6 @@ public class ArticleInfoActivity extends BaseActivity implements IAuthorInfoView
     @Override
     public void showError(String message) {
 
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
     }
 
     /**
@@ -229,7 +222,7 @@ public class ArticleInfoActivity extends BaseActivity implements IAuthorInfoView
                     mDrawable = getDrawableAdapter(ArticleInfoActivity.this, mDrawable,
                             bitmap.getWidth(), bitmap.getHeight());
 
-//	                 mDrawable.setBounds(0, 0, bitmap.getWidth(),
+//	                 mDrawable.setBounds(-10, 0, bitmap.getWidth()+10,
 //	                 bitmap.getHeight());
 
                     mDrawable.setLevel(1);
@@ -272,5 +265,13 @@ public class ArticleInfoActivity extends BaseActivity implements IAuthorInfoView
             }
         }
 
+    }
+
+    public void onShare(View v) {
+        Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onCollection(View v) {
+        Toast.makeText(this, "收藏", Toast.LENGTH_SHORT).show();
     }
 }

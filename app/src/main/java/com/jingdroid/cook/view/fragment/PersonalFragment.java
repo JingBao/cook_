@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -179,6 +180,12 @@ public class PersonalFragment extends BaseFragment implements IAuthorView,IGroup
         setListViewHeightBasedOnChildren(mListView);
         dataloadGroupComplete = true;
         mHander.sendEmptyMessage(MSG_DATA_LOAD_COMPLETED_PERSNAL);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Navigator.getInstance().navigateToArticleGroupActivity(getActivity());
+            }
+        });
     }
 
     @Override

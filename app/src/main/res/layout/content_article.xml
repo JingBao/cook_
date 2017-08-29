@@ -22,7 +22,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="6dp"
             android:background="@drawable/shape_about_bg"
             android:orientation="vertical">
 
@@ -41,6 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
+                android:lineSpacingExtra="10dp"
+                android:padding="2dp"
                 android:textColor="@color/colorBlack"/>
         </LinearLayout>
 
