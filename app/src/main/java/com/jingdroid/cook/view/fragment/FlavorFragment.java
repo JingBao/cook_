@@ -1,6 +1,10 @@
 package com.jingdroid.cook.view.fragment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,6 +24,7 @@ import com.jingdroid.cook.presentation.GroupPresenter;
 import com.jingdroid.cook.presentation.application.MyApplication;
 import com.jingdroid.cook.presentation.model.ArticleGroupEntityModel;
 import com.jingdroid.cook.presentation.model.AuthorEntityModel;
+import com.jingdroid.cook.presentation.navigation.Navigator;
 import com.jingdroid.cook.view.IAuthorView;
 import com.jingdroid.cook.view.IGroupView;
 import com.jingdroid.cook.view.adapter.GroupInfoAdapter;
@@ -166,6 +172,23 @@ public class FlavorFragment extends BaseFragment implements IAuthorView,IGroupVi
         setListViewHeightBasedOnChildren(mListView);
         dataloadGroupComplete = true;
         mHander.sendEmptyMessage(MSG_DATA_LOAD_COMPLETED_FLAVOR);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Drawable drawable = mListView.getChildAt(position).findViewById(R.id.iv_group_bg).getBackground();
+                Bitmap bmp = ((BitmapDrawable)drawable).getBitmap();
+                // 定义矩阵对象
+                Matrix matrix = new Matrix();
+                // 缩放原图
+                matrix.postScale(0.3f, 0.3f);
+                //bmp.getWidth(), bmp.getHeight()分别表示缩放后的位图宽高
+                Bitmap dstbmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(),
+                        matrix, true);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("groupbg", dstbmp);
+                Navigator.getInstance().navigateToArticleGroupActivity(getActivity(),bundle);
+            }
+        });
     }
 
     @Override

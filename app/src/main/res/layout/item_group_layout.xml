@@ -3,18 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:text="最近更新"
-        android:textColor="@color/colorBlack" />
-
     <include
         android:id="@+id/view_group_recomment"
         layout="@layout/view_group_layout"
         android:layout_width="match_parent"
-        android:layout_height="180dp" />
+        android:layout_height="160dp" />
 </LinearLayout>

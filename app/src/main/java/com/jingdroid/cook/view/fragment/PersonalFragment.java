@@ -1,6 +1,10 @@
 package com.jingdroid.cook.view.fragment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -183,7 +187,18 @@ public class PersonalFragment extends BaseFragment implements IAuthorView,IGroup
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Navigator.getInstance().navigateToArticleGroupActivity(getActivity());
+                Drawable drawable = mListView.getChildAt(position).findViewById(R.id.iv_group_bg).getBackground();
+                Bitmap bmp = ((BitmapDrawable)drawable).getBitmap();
+                // 定义矩阵对象
+                Matrix matrix = new Matrix();
+                // 缩放原图
+                matrix.postScale(0.3f, 0.3f);
+                //bmp.getWidth(), bmp.getHeight()分别表示缩放后的位图宽高
+                Bitmap dstbmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(),
+                        matrix, true);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("groupbg", dstbmp);
+                Navigator.getInstance().navigateToArticleGroupActivity(getActivity(),bundle);
             }
         });
     }

@@ -10,7 +10,7 @@
         android:layout_height="match_parent">
 
         <android.support.v4.widget.NestedScrollView
-            android:visibility="gone"
+            android:visibility="visible"
             android:id="@+id/layout_comment_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -93,12 +93,18 @@
                     android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="最近更新"
+                        android:textColor="@color/colorBlack" />
                     <ListView
                         android:id="@+id/list_group"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:dividerHeight="10dp">
+                        android:layout_height="wrap_content">
                     </ListView>
 
                     <RelativeLayout

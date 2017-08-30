@@ -3,6 +3,7 @@ package com.jingdroid.cook.presentation.navigation;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.jingdroid.cook.presentation.model.AuthorEntityModel;
 import com.jingdroid.cook.view.activity.AboutActivity;
@@ -88,9 +89,10 @@ public class Navigator {
      * 关于文章组
      * @param context
      */
-    public void navigateToArticleGroupActivity(Context context) {
+    public void navigateToArticleGroupActivity(Context context, Bundle bundle) {
         if (context != null) {
             Intent intentToLaunch = ArticleGroupActivity.getCallingIntent(context);
+            intentToLaunch.putExtras(bundle);
             context.startActivity(intentToLaunch);
         }
     }

@@ -2,7 +2,9 @@ package com.jingdroid.cook.view.fragment;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -60,26 +62,9 @@ public class RecommentFragment extends BaseFragment implements IAuthorView,IGrou
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-//    //编辑者信息
-//    private RoundedImageView[] ivHeadimg = new RoundedImageView[3];
-//    private TextView[] tvHeadname = new TextView[3];
-//    private TextView[] tvHeadsign = new TextView[3];
-//    private TextView[] ivAuthorArticle = new TextView[3];
-//    private TextView[] ivAuthorSubscribe = new TextView[3];
-//    //文章组信息
-//    private ImageView[] ivGroupimg = new ImageView[2];
-//    private TextView[] tvGroupTitle = new TextView[2];
-//
-//    private RelativeLayout[] mAuthorLayout = new RelativeLayout[3];
-//
-//    private NestedScrollView mContentView;
-//    private View mLoadingView;
 
     private AuthorPresenter mAuthorPresenter;
     private GroupPresenter mGroupPresenter;
-
-//    private boolean dataloadAuthorComplete;
-//    private boolean dataloadGroupComplete;
 
     private Handler mHander = new Handler() {
         @Override
@@ -191,6 +176,23 @@ public class RecommentFragment extends BaseFragment implements IAuthorView,IGrou
         dataloadGroupComplete = true;
         mHander.sendEmptyMessage(MSG_LOAD_COMPLETE);
         mListView.setOnItemClickListener(this);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Drawable drawable = mListView.getChildAt(position).findViewById(R.id.iv_group_bg).getBackground();
+                Bitmap bmp = ((BitmapDrawable)drawable).getBitmap();
+                // 定义矩阵对象
+                Matrix matrix = new Matrix();
+                // 缩放原图
+                matrix.postScale(0.3f, 0.3f);
+                //bmp.getWidth(), bmp.getHeight()分别表示缩放后的位图宽高
+                Bitmap dstbmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(),
+                        matrix, true);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("groupbg", dstbmp);
+                Navigator.getInstance().navigateToArticleGroupActivity(getActivity(),bundle);
+            }
+        });
     }
 
     @Override
