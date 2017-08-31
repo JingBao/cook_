@@ -1,84 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
+    android:layout_height="90dp"
     android:paddingBottom="5dp"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:layout_height="90dp">
+    android:paddingRight="10dp">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="15dp">
 
-    <com.makeramen.roundedimageview.RoundedImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/iv_cookers_headimg"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginLeft="10dp"
-        android:layout_centerVertical="true"
-        android:src="@mipmap/headimg"
-        app:riv_border_color="#333333"
-        app:riv_oval="true"
-        />
-    <RelativeLayout
-        android:layout_toRightOf="@id/iv_cookers_headimg"
-        android:layout_marginLeft="15dp"
-        android:paddingEnd="10dp"
-        android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/tv_headname"
+        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/iv_cookers_headimg"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/headimg"
+            app:riv_border_color="#333333"
+            app:riv_oval="true" />
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="名字"
-            android:textStyle="bold"
-            android:textSize="14sp"
-            android:textColor="@color/colorBlack"/>
-        <TextView
-            android:layout_below="@id/tv_headname"
-            android:id="@+id/tv_headsign"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/iv_cookers_headimg"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:id="@+id/tv_headname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="名字"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_headsign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_headname"
+                android:singleLine="true"
+                android:text="做一盘美味,拨一首镜花空留。"
+                android:textColor="@color/colorBlack"
+                android:textSize="11sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_headsign"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/iv_author_article"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="文章 33"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/iv_author_subscribe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="关注者 143"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/iv_cookers_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:text="做一盘美味,拨一首镜花空留。"
-            android:textSize="11sp"
-            android:textColor="@color/colorBlack"/>
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:layout_below="@id/tv_headsign"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/iv_author_article"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="文章 33"
-                android:textColor="@color/colorBlack"
-                android:textSize="11sp"/>
-            <TextView
-                android:id="@+id/iv_author_subscribe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:textColor="@color/colorBlack"
-                android:text="关注者 143"
-                android:textSize="11sp"/>
-        </LinearLayout>
-    </RelativeLayout>
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:cropToPadding="true"
+            android:padding="5dp"
+            android:src="@mipmap/ic_add_black_36dp" />
 
-    <ImageView
-        android:id="@+id/iv_cookers_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:padding="5dp"
-        android:cropToPadding="true"
-        android:src="@mipmap/ic_add_black_36dp"
-        android:layout_alignParentRight="true"/>
     </RelativeLayout>
 </RelativeLayout>

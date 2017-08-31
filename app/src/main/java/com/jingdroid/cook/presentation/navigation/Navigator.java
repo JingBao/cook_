@@ -70,7 +70,7 @@ public class Navigator {
      */
     public void navigateToCookersActivity(Context context) {
         if (context != null) {
-            Intent intentToLaunch = CookersActivity.getCallingIntent(context);
+            Intent intentToLaunch = CookersActivity.Companion.getCallingIntent(context);
             context.startActivity(intentToLaunch);
         }
     }

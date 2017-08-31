@@ -14,18 +14,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:orientation="vertical"
-        android:clipToPadding="false">
+        android:clipToPadding="false"
+        android:orientation="vertical">
         <ListView
             android:id="@+id/list_cookers"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:paddingBottom="10dp"
             android:clipToPadding="false"
             android:scrollbars="none"
             android:divider="@drawable/shape_cookers_list_divider"
-            android:dividerHeight="1dp"
+            android:dividerHeight="2dp"
             android:background="@drawable/shape_cookers_list">
         </ListView>
 
